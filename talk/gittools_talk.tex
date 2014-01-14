@@ -1,4 +1,4 @@
-\documentclass[ngerman,hyperref={pdfpagelabels=false}]{beamer}
+\documentclass[english,hyperref={pdfpagelabels=false},aspectratio=169]{beamer}
 
 \mode<handout>{
   \usepackage{pgf}
@@ -9,20 +9,24 @@
   \usetheme{Juelich}
 }
 
-\usepackage{babel}
+\usepackage[english]{babel}
 \usepackage[scaled]{helvet}
 \usepackage{graphics}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
+\usepackage{listings}
+
 \usepackage{hyperref}
 
 \title{Git-ify Your (digital) Life}
-\subtitle{Git-basierte Tools, die das Leben vereinfachen}
-\author{Torbjörn Klatt}
-\institute{JSC}
+\subtitle{Git-based tools to ease your life}
+\author{Torbjörn Klatt <\href{mailto:t.klatt@fz-juelich.de}{t.klatt@fz-juelich.de}>}
+\institute{JSC Internal Seminar}
 \date{\today}
+\setbeamertemplate{footer element4}{CC BY-SA 3.0}
+\setbeamertemplate{slide counter}[shownone]
 
 
 \begin{document}
@@ -30,16 +34,17 @@
 
 \begin{frame}
   \frametitle{Overview}
-  \begin{itemize}
-    \item \hyperlink{git}{\textbf{Git} -- \textit{Eine Kurzübersicht}}
-    \item \hyperlink{etckeeper}{\textbf{etckeeper} -- \textit{Behalte deine System-Configs}}
-    \item \hyperlink{vcsh}{\textbf{vcsh} -- \textit{Versioniere dein \$HOME}}
-    \item \hyperlink{mr}{\textbf{mr} -- \textit{Viele Repos}}
-    \item \hyperlink{gitannex}{\textbf{git-annex} -- \textit{Git für Metadaten}}
-    \item \hyperlink{bup}{\textbf{bup} -- \textit{Backup mit Git}}
-    \item \hyperlink{ikiwiki}{\textbf{ikiwiki} -- \textit{Docu-Wiki als Git-Repo}}
-    \item \hyperlink{tipps}{Tipps}
-  \end{itemize}
+  \begin{description}
+    \item[\hyperlink{git}{Git}] \hyperlink{git}{\textit{a short review}}
+    \item[\hyperlink{etckeeper}{etckeeper}] \hyperlink{etckeeper}{\textit{keep your system's configs}}
+    \item[\hyperlink{vcsh}{vcsh}] \hyperlink{vcsh}{\textit{version your \$HOME}}
+    \item[\hyperlink{mr}{mr}] \hyperlink{mr}{\textit{my repositories}}
+    \item[\hyperlink{gitannex}{git-annex}] \hyperlink{gitannex}{\textit{so meta!}}
+    \item[\hyperlink{bup}{bup}] \hyperlink{bup}{\textit{backup with Git}}
+    \item[\hyperlink{ikiwiki}{ikiwiki}] \hyperlink{ikiwiki}{\textit{Wiki compiler and publisher in a Git repo}}
+    \item[\hyperlink{gcrypt}{gcrypt}] \hyperlink{gcrypt}{\textit{PGP-encrypted Git repositories}}
+    \item[\hyperlink{tipps}{Tipps}] \hyperlink{tipps}{\textit{I can't resist \dots}}
+  \end{description}
 \end{frame}
 
 
@@ -48,17 +53,19 @@
 \makepart
 
 \begin{frame}[label=git]
-  \frametitle{Das Versions-Verwaltungssystem \textit{Git}}
-  \framesubtitle{Eine kurze Übersicht}
+  \frametitle{Version Control System \textit{Git}}
+  \framesubtitle{A short overview}
   \begin{itemize}
-    \item dezentral\\
-      {\scriptsize wie Mercurial/hg, Bazar und im Gegensatz zu CVS, Subversion}
-    \item von Linus ``the-one-and-only'' Torwalds\\
-      {\scriptsize\textit{Git} im britisch-englischen Slang gleichbedeutend mit ``\textit{unpleasant person}''}
-    \item nicht-linear\\
-      {\scriptsize ``\textit{branching}'' und ``\textit{merging}'' einfach und performant}
-    \item kryptographische Verifizierung von Revisionen\\
-      {\scriptsize jede Revision (``\textit{commit}'') hat einen eindeutigen SHA-1-Hash}
+    \item decentralized / distributed\\
+      {\scriptsize alike Mercurial/hg or Bazar in contrast to CVS or Subversion}
+    \item designed by Linus ``\textit{the-one-and-only}'' Torwalds\\
+      {\scriptsize\textit{Git} is British-English slang for ``\textit{unpleasant person}''}
+    \item non-linear history\\
+      {\scriptsize \textit{branching} and \textit{merging} is easy and performant}
+    \item cryptological verification of revisions\\
+      {\scriptsize each revision (\textit{commit}) has a unique SHA-1 hash computed from diff + meta info}
+    \item no need for a server / everything is locally available\\
+      {\scriptsize because of first point}
   \end{itemize}
 \end{frame}
 
@@ -70,9 +77,9 @@
 
 \begin{frame}[label=etckeeper]
   \frametitle{etckepper}
-  \framesubtitle{Behalte deine System-Configs \footnote{\tiny Windows-Nutzer: Lehnt euch zurück oder schlaft}}
+  \framesubtitle{Keep Your System's Configurations\footnote{\tiny Windows users: sleep or think of moving to Unix}}
   \begin{itemize}
-    \item 
+    \item Project Page: \url{}
   \end{itemize}
 \end{frame}
 
@@ -82,9 +89,37 @@
 \makepart
 
 \begin{frame}[label=vcsh]
-  \frametitle{}
-  \framesubtitle{}
-  
+  \frametitle{vcsh -- Version Control System for (your) \$HOME}
+  \framesubtitle{version \texttt{.profile}, \texttt{.\{bash,zsh,vim\}rc}, \dots without pollution}
+  \begin{itemize}
+    \item separate Git repositories for dotfiles\\
+      {\scriptsize without polluting \$HOME with \texttt{.git} directories}
+    \item easily migrate your personalized environment to other hosts\\
+      {\scriptsize clone your \texttt{.vim} repository on new host to have it synchronized}
+    \item allows for different branches for different hosts\\
+      {\scriptsize e.g. ``\texttt{tklatt-zamws}'', ``\texttt{myself-laptop}'', ``\texttt{su-myserver}''}
+    \item \textit{vcsh} is a single Shell script
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{vcsh -- Version Control System for (your) \$HOME}
+  \framesubtitle{Example}
+  \begin{block}{One Repository for Your Vim Config~\footnote{\tiny taken from vcsh's Readme}}
+    \scriptsize
+    \begin{lstlisting}[language=sh,basicstyle=\scriptsize\ttfamily,commentstyle=\normalfont\ttfamily\color{fzjgray50}]
+vcsh init vim
+vcsh vim add ~/.vimrc ~/.vim
+vcsh vim commit -m 'Initial commit of my Vim configuration'
+
+# optionally push your files to a remote
+vcsh vim remote add origin <remote>
+vcsh vim push -u origin master
+
+# from now on you can push additional commits like this
+vcsh vim push
+    \end{lstlisting}
+  \end{block}
 \end{frame}
 
 
@@ -104,15 +139,77 @@
 \makepart
 
 \begin{frame}[label=gitannex]
-  \frametitle{git-annex}
-  \framesubtitle{Git für Metadaten}
+  \frametitle{git-annex -- Version Files Without Their Contents}
+  \framesubtitle{So meta!}
   \begin{itemize}
-    \item Problem vieler großer/selten genutzter Daten
-    \item \textit{git-annex} speicher Name, Größe und Ort von Daten ohne sich lokal haben zu müssen
-    \item entfernte Repositories können u.a. USB-HDDs/Sticks, WebDAV, rsync-Verzeichnisse oder das Web sein
-    \item integrierter Podcast-Feed-Reader
+    \item saves meta info (i.e. name, size) of files without their contents
+    \item saves actual files read-only in \texttt{.git/annex/objects}\\
+      {\scriptsize symlinks them to original/real location}
+    \item keeps track of which remote has which files\\
+      {\scriptsize each remote identified by UUID}
+    \item designed for flaky connections\\
+      {\scriptsize uses rsync for data transfer}
   \end{itemize}
 \end{frame}
+
+\begin{frame}
+  \frametitle{git-annex -- Version Files Without Their Contents}
+  \framesubtitle{I mean, so really meta!}
+  \begin{itemize}
+    \item written in Haskell
+    \item allows for special remotes
+      \begin{itemize}
+        \item Amazon S3 / Glacier
+        \item WebDAV
+        \item rsync
+        \item the web (\texttt{http(s)://}, \texttt{ftp://}, archive.org, etc.)
+        \item podcast feeds
+        \item XMPP
+        \item simple directories
+        \item gcrypt
+      \end{itemize}
+    \item collection of conference proceedings {\tiny(slides + video recordings)}\\
+      {\scriptsize \url{https://github.com/RichiH/conference_proceedings}}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{git-annex -- Version Files Without Their Contents}
+  \framesubtitle{Example Szenario: The Archivist}
+  \begin{itemize}
+    \item annex all files
+    \item actual files offline in special remotes on USB drives, tapes, etc.
+    \item having full information about name, size and location of all files in one place at hand
+  \end{itemize}
+  
+  \begin{block}{Example}
+    \scriptsize
+    \begin{lstlisting}[language=bash,basicstyle=\scriptsize\ttfamily,commentstyle=\normalfont\ttfamily\color{fzjgray50}]
+#> git annex whereis
+whereis my_cool_big_file (1 copy)
+    7570b02e-15e9-11e0-adf0-9f3f94cb2eaa  -- backup drive
+whereis other_file (3 copies)
+    0c443de8-e644-11df-acbf-f7cd7ca6210d  -- here (laptop)
+    62b39bbe-4149-11e0-af01-bb89245a1e61  -- usb drive
+    7570b02e-15e9-11e0-adf0-9f3f94cb2eaa  -- backup drive
+    \end{lstlisting}
+%     \vspace{-2em}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{git-annex -- Version Files Without Their Contents}
+  \framesubtitle{Example Szenario: The Nomad}
+  \begin{itemize}
+    \item keep copies of data online (on internet)
+    \item sync several local devices for occasional backup
+    \item add data locally while on the road
+    \item sync data to online remotes while at Internet café or friend's place
+    \item perfect for photos while traveling
+  \end{itemize}
+\end{frame}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -120,12 +217,12 @@
 \makepart
 
 \begin{frame}[label=bup]
-  \frametitle{bup}
-  \framesubtitle{Git für große Dateien}
+  \frametitle{bup -- Git for \textsc{Large} Files}
   \begin{itemize}
-    \item Git ist für Quelltexte gebaut worden\\
-      {\scriptsize Binärdateien sind für Git ein großer Blob}
-    \item bup 
+    \item recap: Git is designed for plaintext files\\
+      {\scriptsize binary files are just a huge blob for Git}
+    \item 
+    \item written in Python
   \end{itemize}
 \end{frame}
 
@@ -135,9 +232,24 @@
 \makepart
 
 \begin{frame}[label=ikiwiki]
-  \frametitle{}
+  \frametitle{ikiwiki -- Wiki Compiler and Publisher in a Git Repo}
   \framesubtitle{}
-  
+  \begin{itemize}
+    \item 
+  \end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{gcrypt}
+\makepart
+
+\begin{frame}[label=gcrypt]
+  \frametitle{gcrypt -- PGP-encrypted Git repositories}
+  \framesubtitle{}
+  \begin{itemize}
+    \item Remark: You might want to use Joey ``joeyh'' Hess' fork of gcrypt
+  \end{itemize}
 \end{frame}
 
 
@@ -149,21 +261,44 @@
   \frametitle{Tipps}
   \framesubtitle{}
   \begin{itemize}
-    \item Zsh als primäre Shell\\
-      {\scriptsize built-in Vervollständigung aller Git-Befehle (inkl. Auswahl von Branches und Tags)}
-    \item packt eure \LaTeX-Dokumente unter Git
+    \item Zsh -- best shell available
+      \begin{itemize}
+        \item built-in completion of all Git commands (incl. selecting branches/tags)
+        \item prompt-integrated info about current VCS working copy
+        \item can mimic Bash, Ksh, tcsh {\tiny(never tried it myself)}
+        \item \dots
+      \end{itemize}
+    \item Finally \dots
+      \begin{center}
+        \structure{You cannot time travel in real-life.\\
+          But you can in your digital life, selectively!}
+      \end{center}
   \end{itemize}
 \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-  \frametitle{Quellen}
+  \frametitle{Project Links}
+  \begin{description}
+    \item[etckeeper] \url{https://joeyh.name/code/etckeeper/}
+    \item[vcsh] \url{https://github.com/RichiH/vcsh}
+    \item[mr] \url{https://github.com/joeyh/myrepos}
+    \item[git-annex] \url{https://git-annex.branchable.com/}
+    \item[bup] \url{https://github.com/bup/bup}
+    \item[ikiwiki] \url{https://ikiwiki.info/}
+    \item[gcrypt] \url{https://github.com/blake2-ppc/git-remote-gcrypt}
+  \end{description}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Sources}
   \begin{itemize}
-    \item Stark inspiriert von Richard ``RichiH'' Hartmans Vortrag auf Linuxtag 2013
+    \item This talk is heavily inspired by Richard ``RichiH'' Hartman's talk at \textit{Linuxtag 2013}
       \footnote{\tiny\url{http://www.linuxtag.org/2013/de/program/mittwoch-22-mai-2013.html?eventid=147}}
-    \item offizielle und inoffizielle Dokumentation der genannten Tools
-    \item (Langzeit-)Experimente mit den genannten Tools
+    \item official and unofficial documentation of named tools
+    \item (long-term) experiments with named tools
   \end{itemize}
 \end{frame}
 

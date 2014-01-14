@@ -1,4 +1,73 @@
 [General]
+def_graphic_ext=pdf
+img_extIsRegExp=false
+img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.3
+lastDocument=gittools_talk.tex
+masterDocument=
 name=Git-Tools Talk
+pkg_extIsRegExp=false
+pkg_extensions=.cls .sty .bbx .cbx .lbx
+src_extIsRegExp=false
+src_extensions=.tex .ltx .latex .dtx .ins
+
+[Tools]
+MakeIndex=
+QuickBuild=
+
+[document-settings,item:Juelich_Theme/tutorial/juelich_theme_tutorial.tex]
+Bookmarks=
+Encoding=ISO-8859-15
+Highlighting=LaTeX
+Indentation Mode=normal
+Mode=LaTeX
+
+[document-settings,item:gittools_talk.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Indentation Mode=normal
+Mode=LaTeX
+
+[item:Juelich_Theme/tutorial/juelich_theme_tutorial.tex]
+archive=true
+column=39
+encoding=ISO-8859-15
+highlight=LaTeX
+line=21
+mode=LaTeX
+open=false
+order=-1
+
+[item:git-toolstalk.kilepr]
+archive=true
+column=1
+encoding=
+highlight=
+line=0
+mode=
+open=false
+order=-1
+
+[item:gittools_talk.tex]
+archive=true
+column=0
+encoding=UTF-8
+highlight=LaTeX
+line=109
+mode=LaTeX
+open=true
+order=0
+
+[view-settings,view=0,item:Juelich_Theme/tutorial/juelich_theme_tutorial.tex]
+CursorColumn=39
+CursorLine=21
+JumpList=
+ViMarks=.,21,39,[,21,39,],21,39
+
+[view-settings,view=0,item:gittools_talk.tex]
+CursorColumn=0
+CursorLine=109
+JumpList=
+ViMarks=.,107,0,[,107,0,],107,0

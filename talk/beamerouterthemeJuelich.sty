@@ -1,0 +1,295 @@
+% Latex-Beamer Template Research Centre Juelich
+% version 09.02
+% please report any problems to i.kabadshow@fz-juelich.de
+
+\mode<presentation>
+
+% No navigation symbols in handout or trans mode:
+\only<handout| trans>{\setbeamertemplate{navigation symbols}{}}
+
+% reduced navigation symbol set
+\defbeamertemplate*{navigation symbols}{Juelich}
+{%
+  \hbox{%
+    \hbox{\insertframenavigationsymbol}
+    \hbox{\insertsubsectionnavigationsymbol}
+    \hbox{\insertsectionnavigationsymbol}
+  }%
+}
+\defbeamertemplate*{navigation symbols}{plain}
+{%
+}
+
+% FZJ Banner Helmholtz
+\defbeamertemplate*{title banner}{}{\translate{FZJOrganization}}
+
+% Slide counter
+\defbeamertemplate*{slide counter}{shownone}[1][\translate{FZJSlideName}]
+{%
+}
+\defbeamertemplate*{slide counter}{showall}[1][\translate{FZJSlideName}]
+{%
+{\usebeamercolor[fg]{date in head/foot}%
+#1~\insertframenumber\ \vrule width0.3pt height5pt\ \inserttotalframenumber%
+}%
+}
+\defbeamertemplate*{slide counter}{default}[1][\translate{FZJSlideName}]
+{%
+{\usebeamercolor[fg]{date in head/foot}%
+#1~\insertframenumber%
+}%
+}
+
+
+% Headline and footline
+\defbeamertemplate*{headline}{Juelich}
+{%
+\begin{beamercolorbox}[leftskip=7.5mm,ht=10mm,dp=0mm]{header}
+\end{beamercolorbox}
+}
+
+
+\defbeamertemplate*{footline}{Juelich}
+{%
+  \begin{beamercolorbox}[leftskip=7.5mm,ht=3.5mm,dp=0.0mm]{header}
+	\usebeamercolor[fg]{date in head/foot}%
+	%element 1
+	\ifbeamertemplateempty{footer element1}{}{%
+	\usebeamertemplate*{footer element1}%
+	\hfill%
+	}%
+	%element 2
+	\ifbeamertemplateempty{footer element2}{}{%
+	\ifbeamertemplateempty{footer element1}{}{}%
+	\usebeamertemplate*{footer element2}%
+	\hskip3.5mm%
+	\hfill%
+	}%
+	%element 3
+	\ifbeamertemplateempty{footer element3}{}{%
+	\ifbeamertemplateempty{footer element2}{}{\hskip-3.5mm}%
+	\usebeamertemplate*{footer element3}%
+	\hskip3.5mm%
+	\hfill%
+	}%
+	% garantees that element4 is on the rightmost position even with all other elements left empty
+	\ifbeamertemplateempty{footer element1}{%
+		\ifbeamertemplateempty{footer element2}{%
+			\ifbeamertemplateempty{footer element3}{%
+		\hfill}{}%
+		}{}%
+	}{}%
+	%element 4
+	\ifbeamertemplateempty{footer element4}{}{%
+	\ifbeamertemplateempty{footer element3}{}{\hskip-3.5mm}%
+	\usebeamertemplate*{footer element4}%
+	\hskip3.5mm%
+	\hfill%
+	}%
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[leftskip=7.5mm,ht=3.5mm]{header}% empty line below footer
+  \end{beamercolorbox}
+}%
+% Background
+\defbeamertemplate*{background}{JuelichTitle}
+{%
+}
+
+\defbeamertemplate*{background}{Juelich}
+{%
+}
+
+\defbeamertemplate*{background canvas}{JuelichTitle}
+{%
+  \vbox{%
+    \hbox{\color{fzjwhite}\vrule width\paperwidth height0.33333\paperheight}%
+    \hbox{\color{fzjblue50}\vrule width\paperwidth height0.66666\paperheight}%
+  }%
+}
+
+% \defbeamertemplate*{background canvas}{Juelich}
+% {%
+% }
+
+\defbeamertemplate*{background canvas}{Juelich}
+{%
+}
+
+
+% Sidebar
+\defbeamertemplate*{sidebar left}{Juelich}
+{%
+}
+
+%Logos
+\defbeamertemplate*{logo partner1}{show}[1][]
+{%
+  \includegraphics[height=1.2240cm]{#1}
+}%
+\defbeamertemplate*{logo partner1}{hide}[1][]
+{%
+}%
+
+\defbeamertemplate*{logo partner2}{show}[1][]
+{%
+\includegraphics[height=1.2240cm]{#1}
+}%
+\defbeamertemplate*{logo partner2}{hide}[1][]
+{%
+}%
+
+
+\defbeamertemplate*{sidebar right}{JuelichTitle}
+{%
+  \vskip-\headheight%
+  \llap{%
+  		\includegraphics[width=5.25cm]{FZJ_Logo_ws}}% titleframe-sized logo
+  \vfill%
+}
+
+\defbeamertemplate*{sidebar right}{Juelich}
+{%
+  \vskip-\headheight%
+  \llap{%
+  		\usebeamertemplate*{logo partner1}%
+  		\usebeamertemplate*{logo partner2}%
+  		\includegraphics[width=2.8cm]{FZJ_Logo_ws}}% frame-sized logo
+  \vfill%
+}
+
+\defbeamertemplate*{sidebar canvas left}{JuelichTitle}
+{%
+\vskip-\headheight%
+\hbox{%
+\begin{beamercolorbox}[wd=1.75mm,dp=0ex,ht=.33333\paperheight]{fzjblue50}
+\end{beamercolorbox}%
+\begin{beamercolorbox}[wd=1.75mm,dp=0ex,ht=.33333\paperheight]{fzjgray30}
+\end{beamercolorbox}%
+}%
+\hbox{%
+\begin{beamercolorbox}[wd=1.75mm,dp=0ex,ht=.33333\paperheight]{fzjgray30}
+\end{beamercolorbox}%
+\begin{beamercolorbox}[wd=1.75mm,dp=0ex,ht=.33333\paperheight]{fzjgray80}
+\end{beamercolorbox}%
+}%
+\hbox{%
+\begin{beamercolorbox}[wd=1.75mm,dp=0ex,ht=.33333\paperheight]{fzjwhite}
+\centering
+\begin{pgfpicture}%
+\pgftransformscale{0.33};%
+\begin{pgfscope}%
+\pgftext[rotate=90]{\fontsize{11pt}{1}\selectfont \color{black}%
+\hspace{5em}\usebeamertemplate{title banner}};%
+\end{pgfscope}%
+\end{pgfpicture}
+\end{beamercolorbox}%
+\begin{beamercolorbox}[wd=1.75mm,dp=0ex,ht=.33333\paperheight]{fzjgray30}
+\end{beamercolorbox}%
+}%
+}
+
+\defbeamertemplate*{sidebar canvas left}{Juelich}
+{%
+\ifbeamercolorempty[bg]{sidebar left}{}
+{\color{bg}\vrule height\paperheight width\beamer@leftsidebar}%
+\vskip-\headheight%
+\hbox{%
+\begin{beamercolorbox}[wd=1.75mm,dp=0ex,ht=0.33333\paperheight]{fzjblue50}
+\end{beamercolorbox}%
+\begin{beamercolorbox}[wd=1.75mm,dp=0ex,ht=0.33333\paperheight]{fzjgray30}
+\end{beamercolorbox}%
+}%
+\hbox{%
+\begin{beamercolorbox}[wd=1.75mm,dp=0ex,ht=0.33333\paperheight]{fzjgray30}
+\end{beamercolorbox}%
+\begin{beamercolorbox}[wd=1.75mm,dp=0ex,ht=0.33333\paperheight]{fzjgray80}
+\end{beamercolorbox}%
+}%
+\hbox{%
+\begin{beamercolorbox}[wd=1.75mm,dp=0ex,ht=.33333\paperheight]{fzjwhite}
+\centering
+\begin{pgfpicture}%
+\pgftransformscale{0.33};%
+\begin{pgfscope}%
+\pgftext[rotate=90]{\fontsize{11pt}{1}\selectfont \color{black}%
+\hspace{5em}\usebeamertemplate{title banner}};%
+\end{pgfscope}%
+\end{pgfpicture}
+\end{beamercolorbox}%
+\begin{beamercolorbox}[wd=1.75mm,dp=0ex,ht=.33333\paperheight]{fzjgray30}
+\end{beamercolorbox}
+}
+}
+
+\defbeamertemplate*{sidebar canvas right}{Juelich}
+{%
+}
+
+% Frame title: Juelich
+\defbeamertemplate*{frametitle}{Juelich}%
+{%
+  \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
+  \@tempdima=\textwidth%
+  \advance\@tempdima by\beamer@leftmargin%
+  \advance\@tempdima by\beamer@rightmargin%
+  \vskip-13pt%
+  \begin{beamercolorbox}[sep=0.65cm,wd=\the\@tempdima]{frametitle}
+    \if@tempswa\else\csname beamer@fte\endcsname\fi%
+    \strut{\usebeamerfont{frametitle}\insertframetitle}\strut\par%
+    {%
+      \ifx\insertframe\@empty%
+      \else%
+      {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\strut\par}%
+      \fi
+    }%
+    \vskip-2ex%
+    \if@tempswa\else\vskip-.3cm\fi% set inside beamercolorbox... evil here...
+  \end{beamercolorbox}%
+}
+
+
+\def\beamer@fteright{\vskip0.35cm\advance\leftskip by 1.7cm\advance\rightskip by 1.7cm}
+
+
+% Title slide
+\def\maketitle{%
+\setbeamertemplate{background canvas}[JuelichTitle]
+\setbeamertemplate{sidebar canvas left}[JuelichTitle]
+\setbeamertemplate{sidebar right}[JuelichTitle]
+\setbeamertemplate{footline}{}
+\begin{frame}[t]
+\vskip-\headheight%
+\vbox{}%
+\vskip48mm%
+\vskip-44pt%
+\titlepage%
+\vfill%
+\end{frame}
+\setbeamertemplate{footline}[Juelich]
+\setbeamertemplate{sidebar right}[Juelich]
+\setbeamertemplate{sidebar canvas left}[Juelich]
+\setbeamertemplate{background canvas}[Juelich]
+}
+
+% Part slide
+\def\makepart{%
+\setbeamertemplate{background canvas}[JuelichTitle]
+\setbeamertemplate{sidebar canvas left}[JuelichTitle]
+\setbeamertemplate{sidebar right}[JuelichTitle]
+\setbeamertemplate{footline}{}
+\begin{frame}[t]
+\vskip-\headheight%
+\vbox{}%
+\vskip48mm%
+\vskip-44pt%
+\partpage%
+\vfill%
+\end{frame}
+\setbeamertemplate{footline}[Juelich]
+\setbeamertemplate{sidebar right}[Juelich]
+\setbeamertemplate{sidebar canvas left}[Juelich]
+\setbeamertemplate{background canvas}[Juelich]
+}
+
+\mode
+<all>

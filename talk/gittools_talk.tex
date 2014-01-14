@@ -1,0 +1,172 @@
+\documentclass[ngerman,hyperref={pdfpagelabels=false}]{beamer}
+
+\mode<handout>{
+  \usepackage{pgf}
+  \usepackage{pgfpages}
+  \pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
+}
+\mode<presentation>{
+  \usetheme{Juelich}
+}
+
+\usepackage{babel}
+\usepackage[scaled]{helvet}
+\usepackage{graphics}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{hyperref}
+
+\title{Git-ify Your (digital) Life}
+\subtitle{Git-basierte Tools, die das Leben vereinfachen}
+\author{Torbjörn Klatt}
+\institute{JSC}
+\date{\today}
+
+
+\begin{document}
+\maketitle
+
+\begin{frame}
+  \frametitle{Overview}
+  \begin{itemize}
+    \item \hyperlink{git}{\textbf{Git} -- \textit{Eine Kurzübersicht}}
+    \item \hyperlink{etckeeper}{\textbf{etckeeper} -- \textit{Behalte deine System-Configs}}
+    \item \hyperlink{vcsh}{\textbf{vcsh} -- \textit{Versioniere dein \$HOME}}
+    \item \hyperlink{mr}{\textbf{mr} -- \textit{Viele Repos}}
+    \item \hyperlink{gitannex}{\textbf{git-annex} -- \textit{Git für Metadaten}}
+    \item \hyperlink{bup}{\textbf{bup} -- \textit{Backup mit Git}}
+    \item \hyperlink{ikiwiki}{\textbf{ikiwiki} -- \textit{Docu-Wiki als Git-Repo}}
+    \item \hyperlink{tipps}{Tipps}
+  \end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Git}
+\makepart
+
+\begin{frame}[label=git]
+  \frametitle{Das Versions-Verwaltungssystem \textit{Git}}
+  \framesubtitle{Eine kurze Übersicht}
+  \begin{itemize}
+    \item dezentral\\
+      {\scriptsize wie Mercurial/hg, Bazar und im Gegensatz zu CVS, Subversion}
+    \item von Linus ``the-one-and-only'' Torwalds\\
+      {\scriptsize\textit{Git} im britisch-englischen Slang gleichbedeutend mit ``\textit{unpleasant person}''}
+    \item nicht-linear\\
+      {\scriptsize ``\textit{branching}'' und ``\textit{merging}'' einfach und performant}
+    \item kryptographische Verifizierung von Revisionen\\
+      {\scriptsize jede Revision (``\textit{commit}'') hat einen eindeutigen SHA-1-Hash}
+  \end{itemize}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{etckeeper}
+\makepart
+
+\begin{frame}[label=etckeeper]
+  \frametitle{etckepper}
+  \framesubtitle{Behalte deine System-Configs \footnote{\tiny Windows-Nutzer: Lehnt euch zurück oder schlaft}}
+  \begin{itemize}
+    \item 
+  \end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{vcsh}
+\makepart
+
+\begin{frame}[label=vcsh]
+  \frametitle{}
+  \framesubtitle{}
+  
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{mr}
+\makepart
+
+\begin{frame}[label=mr]
+  \frametitle{}
+  \framesubtitle{}
+  
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{git-annex}
+\makepart
+
+\begin{frame}[label=gitannex]
+  \frametitle{git-annex}
+  \framesubtitle{Git für Metadaten}
+  \begin{itemize}
+    \item Problem vieler großer/selten genutzter Daten
+    \item \textit{git-annex} speicher Name, Größe und Ort von Daten ohne sich lokal haben zu müssen
+    \item entfernte Repositories können u.a. USB-HDDs/Sticks, WebDAV, rsync-Verzeichnisse oder das Web sein
+    \item integrierter Podcast-Feed-Reader
+  \end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{bup}
+\makepart
+
+\begin{frame}[label=bup]
+  \frametitle{bup}
+  \framesubtitle{Git für große Dateien}
+  \begin{itemize}
+    \item Git ist für Quelltexte gebaut worden\\
+      {\scriptsize Binärdateien sind für Git ein großer Blob}
+    \item bup 
+  \end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{ikiwiki}
+\makepart
+
+\begin{frame}[label=ikiwiki]
+  \frametitle{}
+  \framesubtitle{}
+  
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Tipps}
+\makepart
+
+\begin{frame}[label=tipps]
+  \frametitle{Tipps}
+  \framesubtitle{}
+  \begin{itemize}
+    \item Zsh als primäre Shell\\
+      {\scriptsize built-in Vervollständigung aller Git-Befehle (inkl. Auswahl von Branches und Tags)}
+    \item packt eure \LaTeX-Dokumente unter Git
+  \end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Quellen}
+  \begin{itemize}
+    \item Stark inspiriert von Richard ``RichiH'' Hartmans Vortrag auf Linuxtag 2013
+      \footnote{\tiny\url{http://www.linuxtag.org/2013/de/program/mittwoch-22-mai-2013.html?eventid=147}}
+    \item offizielle und inoffizielle Dokumentation der genannten Tools
+    \item (Langzeit-)Experimente mit den genannten Tools
+  \end{itemize}
+\end{frame}
+
+
+\end{document}
+

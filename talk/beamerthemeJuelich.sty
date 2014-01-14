@@ -1,0 +1,106 @@
+% Latex-Beamer Template Research Centre Juelich
+% version 09.02
+% please report any problems to i.kabadshow@fz-juelich.de
+\mode<handout>{%
+	\pgfpageslogicalpageoptions{1}
+	{%
+	border code=\pgfsetlinewidth{0.4pt}\pgfstroke%
+	}
+	\pgfpageslogicalpageoptions{2}
+	{%
+	border code=\pgfsetlinewidth{0.4pt}\pgfstroke%
+	}
+	\pgfpageslogicalpageoptions{3}
+	{%
+	border code=\pgfsetlinewidth{0.4pt}\pgfstroke%
+	}
+	\pgfpageslogicalpageoptions{4}
+	{%
+	border code=\pgfsetlinewidth{0.4pt}\pgfstroke%
+	}
+	\pgfpageslogicalpageoptions{5}
+	{%
+	border code=\pgfsetlinewidth{0.4pt}\pgfstroke%
+	}
+	\pgfpageslogicalpageoptions{6}
+	{%
+	border code=\pgfsetlinewidth{0.4pt}\pgfstroke%
+	}%
+	\pgfpageslogicalpageoptions{7}
+	{%
+	border code=\pgfsetlinewidth{0.4pt}\pgfstroke%
+	}
+	\pgfpageslogicalpageoptions{8}
+	{%
+	border code=\pgfsetlinewidth{0.4pt}\pgfstroke%
+	}
+	\pgfpageslogicalpageoptions{9}
+	{%
+	border code=\pgfsetlinewidth{0.4pt}\pgfstroke%
+	}
+	\pgfpageslogicalpageoptions{10}
+	{%
+	border code=\pgfsetlinewidth{0.4pt}\pgfstroke%
+	}%
+	\pgfpageslogicalpageoptions{11}
+	{%
+	border code=\pgfsetlinewidth{0.4pt}\pgfstroke%
+	}
+	\pgfpageslogicalpageoptions{12}
+	{%
+	border code=\pgfsetlinewidth{0.4pt}\pgfstroke%
+	}
+	\pgfpageslogicalpageoptions{13}
+	{%
+	border code=\pgfsetlinewidth{0.4pt}\pgfstroke%
+	}
+	\pgfpageslogicalpageoptions{14}
+	{%
+	border code=\pgfsetlinewidth{0.4pt}\pgfstroke%
+	}
+	\pgfpageslogicalpageoptions{15}
+	{%
+	border code=\pgfsetlinewidth{0.4pt}\pgfstroke%
+	}
+	\pgfpageslogicalpageoptions{16}
+	{%
+	border code=\pgfsetlinewidth{0.4pt}\pgfstroke%
+	}%
+}
+
+\mode<presentation>
+
+% Juelich specific definitions
+
+\deftranslation[]{FZJSlideName}{Slide}
+\deftranslation[]{FZJOrganization}{Member of the Helmholtz-Association}
+
+\deftranslation[to=German]{FZJSlideName}{Folie}
+\deftranslation[to=German]{FZJOrganization}{Mitglied der Helmholtz-Gemeinschaft}
+
+\usefonttheme{Juelich}
+\usecolortheme{Juelich}
+\useinnertheme{Juelich}
+\useoutertheme{Juelich}
+
+\setbeamertemplate{footer element1}{\insertdate}
+\setbeamertemplate{footer element2}{\insertauthor}
+\setbeamertemplate{footer element3}{}
+\setbeamertemplate{footer element4}{\usebeamertemplate*{slide counter}}
+
+\setbeamertemplate{logo partner1}[hide][partner1]
+\setbeamertemplate{logo partner2}[hide][partner2]
+
+% PDF Settings
+% define and check pdflatex or latex variables
+% fixes png transparency color screw-up
+\newif\ifpdf
+\ifx\pdfoutput\undefined
+   \pdffalse
+\else
+   \pdftrue
+   \pdfpageattr {/Group << /S /Transparency /I true /CS /DeviceRGB>>}
+\fi
+
+
+\mode<all>

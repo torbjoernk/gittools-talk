@@ -1,0 +1,84 @@
+% Latex-Beamer Template Research Centre Juelich
+% version 09.02
+% please report any problems to i.kabadshow@fz-juelich.de
+
+\mode<presentation>
+
+\setlength\leftmargini{2.75ex}% 2ex+0.75ex (1/2)
+\setlength\leftmarginii{2.75ex}
+\setlength\leftmarginiii{2.75ex}
+
+\setbeamersize{sidebar width left=3.5mm}
+%institute
+\def\beamer@andinst{~~}
+% Title page: Juelich
+\defbeamertemplate*{title page}{Juelich}
+{%
+  \setbox1=\vbox{%
+    \begin{beamercolorbox}[sep=8pt,left]{title}
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%    
+    \end{beamercolorbox}%
+    \vskip2em\par
+    \begin{beamercolorbox}[sep=8pt,left]{author}
+    {\usebeamerfont{date}\usebeamercolor[fg]{author}\insertdate}%
+    \hskip0.5em%
+    {\usebeamercolor[fg]{author}\vrule width0.3pt}%
+    \hskip0.5em%
+    {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor 
+    \hskip0.5em%
+    {\usebeamercolor[fg]{author}\vrule width0.3pt}%
+    \hskip0.5em%
+    \insertinstitute
+    }%
+    \end{beamercolorbox}
+    \vskip-0.5em
+%     \begin{beamercolorbox}[sep=8pt,left]{author}
+%     {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertinstitute}%
+% 	\end{beamercolorbox}
+% 	\vskip-0.5em
+    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+ }%
+ \moveleft6mm\box1%
+}
+
+
+% Part page: Juelich
+\defbeamertemplate*{part page}{Juelich}
+{%
+  \setbox1=\vbox{%
+    \begin{beamercolorbox}[sep=8pt,left]{title}
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle~ % insert placeholders space for part if no presentation subtitle is given
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\partname~\insertromanpartnumber:\ \insertpart\par}%
+      \fi%    
+    \end{beamercolorbox}%
+    \vskip2em\par
+    \begin{beamercolorbox}[sep=8pt,left]{author}
+    {\usebeamerfont{date}\usebeamercolor[fg]{author}\insertdate}%
+    \hskip0.5em%
+    {\usebeamercolor[fg]{author}\vrule width0.3pt}%
+    \hskip0.5em%
+    {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor}%
+    \end{beamercolorbox}\vskip0.5em
+    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+ }%
+ \moveleft6mm\box1%
+}
+
+% Itemize items, Juelich
+\defbeamertemplate*{itemize item}{Juelich}{\tiny\raise.5ex\hbox{\vrule width 1ex height 1ex}\hskip1.5ex}
+\defbeamertemplate*{itemize subitem}{Juelich}{\TINY\raise1ex\hbox{\vrule width 1ex height 1ex}\hskip1.5ex}
+\defbeamertemplate*{itemize subsubitem}{Juelich}{\TINY\raise1ex\hbox{\vrule width 1ex height 1ex}\hskip1.5ex}
+
+% Enumerate items, Juelich
+\setbeamertemplate{enumerate items}[square]
+
+\mode
+<all>

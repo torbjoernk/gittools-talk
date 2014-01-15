@@ -25,8 +25,8 @@
 \author{Torbjörn Klatt <\href{mailto:t.klatt@fz-juelich.de}{t.klatt@fz-juelich.de}>}
 \institute{JSC Internal Seminar}
 \date{\today}
-\setbeamertemplate{footer element4}{CC BY-SA 3.0}
-\setbeamertemplate{slide counter}[shownone]
+\setbeamertemplate{footer element3}{CC BY-SA 3.0}
+\setbeamertemplate{slide counter}[showall]
 
 
 \begin{document}
@@ -38,11 +38,12 @@
     \item[\hyperlink{git}{Git}] \hyperlink{git}{\textit{a short review}}
     \item[\hyperlink{etckeeper}{etckeeper}] \hyperlink{etckeeper}{\textit{keep your system's configs}}
     \item[\hyperlink{vcsh}{vcsh}] \hyperlink{vcsh}{\textit{version your \$HOME}}
-    \item[\hyperlink{mr}{mr}] \hyperlink{mr}{\textit{my repositories}}
+    \item[\hyperlink{mr}{mr}] \hyperlink{mr}{\textit{my / multiple repositories}}
     \item[\hyperlink{gitannex}{git-annex}] \hyperlink{gitannex}{\textit{so meta!}}
     \item[\hyperlink{bup}{bup}] \hyperlink{bup}{\textit{backup with Git}}
     \item[\hyperlink{ikiwiki}{ikiwiki}] \hyperlink{ikiwiki}{\textit{Wiki compiler and publisher in a Git repo}}
     \item[\hyperlink{gcrypt}{gcrypt}] \hyperlink{gcrypt}{\textit{PGP-encrypted Git repositories}}
+    \item[\hyperlink{gitodo}{gitodo}] \hyperlink{gitodo}{\textit{cmd-based ToDo List Manager in a Git repo}}
     \item[\hyperlink{tipps}{Tipps}] \hyperlink{tipps}{\textit{I can't resist \dots}}
   \end{description}
 \end{frame}
@@ -77,9 +78,14 @@
 
 \begin{frame}[label=etckeeper]
   \frametitle{etckepper}
-  \framesubtitle{Keep Your System's Configurations\footnote{\tiny Windows users: sleep or think of moving to Unix}}
+  \framesubtitle{Keep Your System's Configurations\footnote{\tiny Windows users: sleep or think of moving to Linux}}
   \begin{itemize}
-    \item Project Page: \url{}
+    \item creates a Git {\scriptsize\color{fzjgray50}(or Mercurial/Bazaar/Darcs)} repo for \texttt{/etc}
+    \item uses additional meta-file for remembering permissions for each file\\
+      {\scriptsize DVCS usually don't track file owner info; only executable bit}
+    \item ueses \textit{pre-commit} hooks to fix file permissions
+    \item hooks itself into package managers {\scriptsize\color{fzjgray50}(e.g. \textit{apt}, \textit{zypper})} to auto-commit \texttt{/etc} before and after package changes
+    \item manual commits also possible
   \end{itemize}
 \end{frame}
 
@@ -106,7 +112,7 @@
   \frametitle{vcsh -- Version Control System for (your) \$HOME}
   \framesubtitle{Example}
   \begin{block}{One Repository for Your Vim Config~\footnote{\tiny taken from vcsh's Readme}}
-    \scriptsize
+    \vspace{-0.75em}
     \begin{lstlisting}[language=sh,basicstyle=\scriptsize\ttfamily,commentstyle=\normalfont\ttfamily\color{fzjgray50}]
 vcsh init vim
 vcsh vim add ~/.vimrc ~/.vim
@@ -119,6 +125,7 @@ vcsh vim push -u origin master
 # from now on you can push additional commits like this
 vcsh vim push
     \end{lstlisting}
+    \vspace{-0.75em}
   \end{block}
 \end{frame}
 
@@ -128,7 +135,7 @@ vcsh vim push
 \makepart
 
 \begin{frame}[label=mr]
-  \frametitle{}
+  \frametitle{mr -- my / multiple repositories}
   \framesubtitle{}
   
 \end{frame}
@@ -140,9 +147,9 @@ vcsh vim push
 
 \begin{frame}[label=gitannex]
   \frametitle{git-annex -- Version Files Without Their Contents}
-  \framesubtitle{So meta!}
+  \framesubtitle{So meta!~\footnote{\tiny Windows users: Wake up!}}
   \begin{itemize}
-    \item saves meta info (i.e. name, size) of files without their contents
+    \item saves meta info {\scriptsize\color{fzjgray50}(i.e. name, size)} of files without their contents
     \item saves actual files read-only in \texttt{.git/annex/objects}\\
       {\scriptsize symlinks them to original/real location}
     \item keeps track of which remote has which files\\
@@ -162,13 +169,13 @@ vcsh vim push
         \item Amazon S3 / Glacier
         \item WebDAV
         \item rsync
-        \item the web (\texttt{http(s)://}, \texttt{ftp://}, archive.org, etc.)
+        \item the web {\scriptsize\color{fzjgray50}(\texttt{http(s)://}, \texttt{ftp://}, archive.org, arxiv.org/[format]/[ID], etc.)}
         \item podcast feeds
         \item XMPP
         \item simple directories
         \item gcrypt
       \end{itemize}
-    \item collection of conference proceedings {\tiny(slides + video recordings)}\\
+    \item example collection of conference proceedings {\scriptsize\color{fzjgray50}(slides + video recordings)}\\
       {\scriptsize \url{https://github.com/RichiH/conference_proceedings}}
   \end{itemize}
 \end{frame}
@@ -184,7 +191,7 @@ vcsh vim push
   \end{itemize}
   
   \begin{block}{Example}
-    \scriptsize
+    \vspace{-0.75em}
     \begin{lstlisting}[language=bash,basicstyle=\scriptsize\ttfamily,commentstyle=\normalfont\ttfamily\color{fzjgray50}]
 #> git annex whereis
 whereis my_cool_big_file (1 copy)
@@ -194,7 +201,7 @@ whereis other_file (3 copies)
     62b39bbe-4149-11e0-af01-bb89245a1e61  -- usb drive
     7570b02e-15e9-11e0-adf0-9f3f94cb2eaa  -- backup drive
     \end{lstlisting}
-%     \vspace{-2em}
+    \vspace{-0.75em}
   \end{block}
 \end{frame}
 
@@ -220,8 +227,11 @@ whereis other_file (3 copies)
   \frametitle{bup -- Git for \textsc{Large} Files}
   \begin{itemize}
     \item recap: Git is designed for plaintext files\\
-      {\scriptsize binary files are just a huge blob for Git}
-    \item 
+      {\scriptsize binary files are just a huge blob for Git; no diff possible}
+    \item uses Git object trees and replaces hashing and packing algorithms
+    \item designed for space-saving incremental backups
+    \item backups can be FUSE mounted
+    \item can be a special remote for git-annex
     \item written in Python
   \end{itemize}
 \end{frame}
@@ -248,8 +258,39 @@ whereis other_file (3 copies)
   \frametitle{gcrypt -- PGP-encrypted Git repositories}
   \framesubtitle{}
   \begin{itemize}
+    \item implements a git-remote-handler to deal with \texttt{gcrypt::} remotes
+    \item can be a special remote for git-annex
     \item Remark: You might want to use Joey ``joeyh'' Hess' fork of gcrypt
   \end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{gitodo}
+\makepart
+
+\begin{frame}[label=gitodo,fragile]
+  \frametitle{gitodo -- ToDo List Manager with Git}
+  \framesubtitle{}
+  \begin{itemize}
+    \item simple commandline-based ToDo list management
+    \item ToDos are managed in a single Git repository
+    \item single portable Ruby script {\scriptsize\color{fzjgray50}(was a Shell script some time ago)}
+  \end{itemize}
+  \begin{block}{Example}
+    \vspace{-0.75em}
+    \begin{lstlisting}[language=sh,basicstyle=\scriptsize\ttfamily,commentstyle=\normalfont\ttfamily\color{fzjgray50}]
+# gitodo
+ S   Pri      Deadline         ID    Subject
+---+-----+------------------+------+-----------------------------------
+   |  -3 |                  |    2 | Christmas presents
+ D |   0 |            22:00 |    9 | Remove garbage from your bed
+ C |   0 |            23:30 |    8 | Go to sleep -- yes, it's important
+   |   0 | 2013-12-10 23:59 |   10 | Still awake?
+   |   0 | 2013-12-24       |    7 | Remove SVN from all computers
+    \end{lstlisting}
+    \vspace{-0.75em}
+  \end{block}
 \end{frame}
 
 
@@ -259,16 +300,17 @@ whereis other_file (3 copies)
 
 \begin{frame}[label=tipps]
   \frametitle{Tipps}
-  \framesubtitle{}
+  \framesubtitle{I can't resist \dots}
   \begin{itemize}
-    \item Zsh -- best shell available
+    \item portable GUI for Git {\scriptsize\color{fzjgray50}(browsing and actions)}: \textit{git-cola}\footnote{\tiny\url{https://github.com/git-cola/git-cola}}
+    \item Zsh
       \begin{itemize}
-        \item built-in completion of all Git commands (incl. selecting branches/tags)
+        \item very powerful built-in completion for most programs {\scriptsize\color{fzjgray50}(Git: incl. selecting branches/tags)}
         \item prompt-integrated info about current VCS working copy
-        \item can mimic Bash, Ksh, tcsh {\tiny(never tried it myself)}
-        \item \dots
+        \item highly customizable prompt {\scriptsize\color{fzjgray50}(left and right)}
+        \item can mimic Bash, Ksh, tcsh {\scriptsize\color{fzjgray50}(never tried it myself)}
       \end{itemize}
-    \item Finally \dots
+    \item Finally:
       \begin{center}
         \structure{You cannot time travel in real-life.\\
           But you can in your digital life, selectively!}
@@ -288,6 +330,7 @@ whereis other_file (3 copies)
     \item[bup] \url{https://github.com/bup/bup}
     \item[ikiwiki] \url{https://ikiwiki.info/}
     \item[gcrypt] \url{https://github.com/blake2-ppc/git-remote-gcrypt}
+    \item[gitodo] \url{https://github.com/vain/gitodo}
   \end{description}
 \end{frame}
 
@@ -301,6 +344,22 @@ whereis other_file (3 copies)
     \item (long-term) experiments with named tools
   \end{itemize}
 \end{frame}
+
+\begin{frame}
+  \frametitle{~}
+  \begin{center}
+    {\huge Thank you for your interest!}\par
+    \bigskip
+    \bigskip
+    \bigskip
+    \bigskip
+    {\Large Questions?}\par
+    {\scriptsize\color{fzjgray50}(now or later)}
+    \bigskip
+    \bigskip
+  \end{center}
+\end{frame}
+
 
 
 \end{document}

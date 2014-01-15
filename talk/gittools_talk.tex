@@ -20,6 +20,26 @@
 
 \usepackage{hyperref}
 
+\lstdefinelanguage{zsh}{%
+  morekeywords=[1]{du,bup,cat,git,vcsh,mr,ls,gpg,gitodo},
+  morekeywords=[2]{annex,index,save,init,add,commit,remote,push,clone,list,update,bootstrap,new},
+  sensitive=true,
+  morecomment=[l]\#,
+  morecomment=[l]\>,
+  string=[d]\"
+}
+\lstset{
+%   language=zsh,
+  basicstyle=\scriptsize\ttfamily,
+  commentstyle=\color{fzjgray80},
+  keywordstyle=[1]\color{fzjgreen},
+  keywordstyle=[2]\color{fzjblue},
+  stringstyle=\color{fzjred},
+  inputencoding=utf8,
+  showspaces=false,
+  showstringspaces=false
+}
+
 \title{Git-ify Your (digital) Life}
 \subtitle{Git-based tools to ease your life}
 \author{Torbjörn Klatt <\href{mailto:t.klatt@fz-juelich.de}{t.klatt@fz-juelich.de}>}
@@ -42,7 +62,7 @@
     \item[\hyperlink{gitannex}{git-annex}] \hyperlink{gitannex}{\textit{so meta!}}
     \item[\hyperlink{bup}{bup}] \hyperlink{bup}{\textit{backup with Git}}
     \item[\hyperlink{ikiwiki}{ikiwiki}] \hyperlink{ikiwiki}{\textit{Wiki compiler and publisher in a Git repo}}
-    \item[\hyperlink{gcrypt}{gcrypt}] \hyperlink{gcrypt}{\textit{PGP-encrypted Git repositories}}
+    \item[\hyperlink{gcrypt}{gcrypt}] \hyperlink{gcrypt}{\textit{GPG-encrypted Git repositories}}
     \item[\hyperlink{gitodo}{gitodo}] \hyperlink{gitodo}{\textit{cmd-based ToDo List Manager in a Git repo}}
     \item[\hyperlink{tipps}{Tipps}] \hyperlink{tipps}{\textit{I can't resist \dots}}
   \end{description}
@@ -59,8 +79,9 @@
   \begin{itemize}
     \item decentralized / distributed\\
       {\scriptsize alike Mercurial/hg or Bazar in contrast to CVS or Subversion}
-    \item designed by Linus ``\textit{the-one-and-only}'' Torwalds\\
-      {\scriptsize\textit{Git} is British-English slang for ``\textit{unpleasant person}''}
+%     \item designed by Linus ``\textit{the-one-and-only}'' Torwalds\\
+%       {\scriptsize\textit{Git} is British-English slang for ``\textit{unpleasant person}''}
+    \item works on deltas {\scriptsize\color{fzjgray50}(diffs, patches)} instead of whole files
     \item non-linear history\\
       {\scriptsize \textit{branching} and \textit{merging} is easy and performant}
     \item cryptological verification of revisions\\
@@ -89,6 +110,17 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{}
+  \begin{block}{Example}
+    \vspace{-0.75em}
+    \begin{lstlisting}
+
+    \end{lstlisting}
+    \vspace{-0.75em}
+  \end{block}
+\end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \part{vcsh}
@@ -96,7 +128,7 @@
 
 \begin{frame}[label=vcsh]
   \frametitle{vcsh -- Version Control System for (your) \$HOME}
-  \framesubtitle{version \texttt{.profile}, \texttt{.\{bash,zsh,vim\}rc}, \dots without pollution}
+  \framesubtitle{version \texttt{.profile}, \texttt{.\{bash,zsh,vim\}rc}, \dots~--- without pollution}
   \begin{itemize}
     \item separate Git repositories for dotfiles\\
       {\scriptsize without polluting \$HOME with \texttt{.git} directories}
@@ -111,19 +143,20 @@
 \begin{frame}[fragile]
   \frametitle{vcsh -- Version Control System for (your) \$HOME}
   \framesubtitle{Example}
-  \begin{block}{One Repository for Your Vim Config~\footnote{\tiny taken from vcsh's Readme}}
+  \begin{block}{One repository for your Vim config, another for Zsh}
     \vspace{-0.75em}
-    \begin{lstlisting}[language=sh,basicstyle=\scriptsize\ttfamily,commentstyle=\normalfont\ttfamily\color{fzjgray50}]
+    \begin{lstlisting}[language=zsh]
 vcsh init vim
 vcsh vim add ~/.vimrc ~/.vim
-vcsh vim commit -m 'Initial commit of my Vim configuration'
-
-# optionally push your files to a remote
-vcsh vim remote add origin <remote>
+vcsh vim commit -m "Initial commit of my Vim configuration"
+vcsh vim remote add origin git@my-server.net:vim-repo
 vcsh vim push -u origin master
 
-# from now on you can push additional commits like this
-vcsh vim push
+vcsh init zsh
+vcsh zsh add ~/.zsh ~/.zshrc
+vcsh zsh commit -m "Initial commit of my Zsh configuration"
+vcsh zsh remote add origin git@my-server.net:zsh-repo
+vcsh zsh push -u origin master
     \end{lstlisting}
     \vspace{-0.75em}
   \end{block}
@@ -134,10 +167,28 @@ vcsh vim push
 \part{mr}
 \makepart
 
-\begin{frame}[label=mr]
+\begin{frame}[label=mr,fragile]
   \frametitle{mr -- my / multiple repositories}
-  \framesubtitle{}
-  
+  \framesubtitle{One command to rule them all}
+  \begin{itemize}
+    \item Problem: a bunch of \textit{vcsh} repos are not very handy
+    \item iterates over list of repos and runs same command on each
+    \item can handle Git, git-svn and vcsh repos equally
+    \item provides \textit{bootstrap} command to setup/clone an environment on new host
+    \item integrates well with \textit{vcsh} {\scriptsize\color{fzjgray50}(\textit{mr} config directory can be a \textit{vcsh} repo itself)}
+    \item a single Perl script
+  \end{itemize}
+  \begin{block}{Example}
+    \vspace{-0.75em}
+    \begin{lstlisting}[language=zsh]
+vcsh list
+> vim zsh git ssh bin
+mr update  # runs `git pull` or `git clone` for each
+# downloads named .mrconfig and clones all repos in there
+mr bootstrap https://my-server.net/.mrconfig
+    \end{lstlisting}
+    \vspace{-0.75em}
+  \end{block}
 \end{frame}
 
 
@@ -173,7 +224,6 @@ vcsh vim push
         \item podcast feeds
         \item XMPP
         \item simple directories
-        \item gcrypt
       \end{itemize}
     \item example collection of conference proceedings {\scriptsize\color{fzjgray50}(slides + video recordings)}\\
       {\scriptsize \url{https://github.com/RichiH/conference_proceedings}}
@@ -192,14 +242,14 @@ vcsh vim push
   
   \begin{block}{Example}
     \vspace{-0.75em}
-    \begin{lstlisting}[language=bash,basicstyle=\scriptsize\ttfamily,commentstyle=\normalfont\ttfamily\color{fzjgray50}]
-#> git annex whereis
-whereis my_cool_big_file (1 copy)
-    7570b02e-15e9-11e0-adf0-9f3f94cb2eaa  -- backup drive
-whereis other_file (3 copies)
-    0c443de8-e644-11df-acbf-f7cd7ca6210d  -- here (laptop)
-    62b39bbe-4149-11e0-af01-bb89245a1e61  -- usb drive
-    7570b02e-15e9-11e0-adf0-9f3f94cb2eaa  -- backup drive
+    \begin{lstlisting}[language=zsh]
+git annex whereis
+> whereis my_cool_big_file (1 copy)
+>     7570b02e-15e9-11e0-adf0-9f3f94cb2eaa  -- backup drive
+> whereis other_file (3 copies)
+>     0c443de8-e644-11df-acbf-f7cd7ca6210d  -- here (laptop)
+> 62b39bbe-4149-11e0-af01-bb89245a1e61  -- usb drive
+> 7570b02e-15e9-11e0-adf0-9f3f94cb2eaa  -- backup drive
     \end{lstlisting}
     \vspace{-0.75em}
   \end{block}
@@ -213,6 +263,7 @@ whereis other_file (3 copies)
     \item sync several local devices for occasional backup
     \item add data locally while on the road
     \item sync data to online remotes while at Internet café or friend's place
+    \item drop local copies, still have them online and knowing exactly where
     \item perfect for photos while traveling
   \end{itemize}
 \end{frame}
@@ -231,9 +282,34 @@ whereis other_file (3 copies)
     \item uses Git object trees and replaces hashing and packing algorithms
     \item designed for space-saving incremental backups
     \item backups can be FUSE mounted
-    \item can be a special remote for git-annex
+    \item can be a special remote for \textit{git-annex}
+    \item \texttt{bup web}: browse backup trees in web browser
     \item written in Python
   \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{bup -- Git for \textsc{Large} Files}
+  \begin{block}{Example}
+    \vspace{-0.75em}
+    \begin{lstlisting}[language=zsh]
+bup init
+> Initialized empty Git repository in /root/.bup/
+bup index /etc
+bup save --name zamws-etc /etc
+> Reading index: 6340, done.
+> Saving: 100.00% (31381/31381k, 6340/6340 files), done.
+bup index /home                                         # took a few seconds
+bup save --name zamws-home /home                        # took about 3min
+> Reading index: 203502, done.
+> Saving: 100.00% (14743111/14743111k, 203502/203502 files), done.
+du -sh /etc /home $BUP_DIR
+> 49M     /etc
+> 15G     /home
+> 9.2G    /root/.bup
+    \end{lstlisting}
+    \vspace{-0.75em}
+  \end{block}
 \end{frame}
 
 
@@ -249,19 +325,60 @@ whereis other_file (3 copies)
   \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{}
+  \begin{block}{Example}
+    \vspace{-0.75em}
+    \begin{lstlisting}
+
+    \end{lstlisting}
+    \vspace{-0.75em}
+  \end{block}
+\end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \part{gcrypt}
 \makepart
 
 \begin{frame}[label=gcrypt]
-  \frametitle{gcrypt -- PGP-encrypted Git repositories}
+  \frametitle{gcrypt -- GPG-encrypted Git remotes}
   \framesubtitle{}
   \begin{itemize}
-    \item implements a git-remote-handler to deal with \texttt{gcrypt::} remotes
-    \item can be a special remote for git-annex
+    \item implements a git-remote-handler to deal with \texttt{gcrypt::} remotes\\
+      {\scriptsize transport via rsync, sftp or git}
+    \item remote repository is GPG-encrypted for one or multiple participants
+    \item each pack is encrypted with a symetric key stored in a asymetric encrypted manifest file
+    \item can be a special remote for \textit{git-annex}
+    \item Hint: use it as a remote for your \textit{etckeeper}'s repo
     \item Remark: You might want to use Joey ``joeyh'' Hess' fork of gcrypt
+      \footnote{\tiny\url{https://github.com/joeyh/git-remote-gcrypt}}
   \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{gcrypt -- GPG-encrypted Git remotes}
+  \framesubtitle{}
+  \begin{block}{Example}
+    \vspace{-0.75em}
+    \begin{lstlisting}[language=zsh]
+git init
+git add my_secret_file
+git commit -m "secret file"
+git remote add secret-server gcrypt::git@my-server.net:secret-repo
+git push secret-server master
+git clone git@my-server.net:secret-repo
+ls -lA secret-repo
+> -rw------- 1 t.klatt users  303 Jan 15 09:24 0153f2b0...ea5f861d
+> -rw------- 1 t.klatt users 1.4K Jan 15 09:24 91bd0c09...4881aa0a
+> drwx------ 1 t.klatt users  138 Jan 15 09:25 .git
+gpg -d 91bd0c09...4881aa0a
+> fc564bef...94c3ff80 refs/heads/master
+> pack :SHA256:0153f2b0...ea5f861d w+bxes2v...1MCkGi8+
+> repo :id:3lmzxTGoXJVmHPtfaOTf
+    \end{lstlisting}
+    \vspace{-0.75em}
+  \end{block}
 \end{frame}
 
 
@@ -269,25 +386,38 @@ whereis other_file (3 copies)
 \part{gitodo}
 \makepart
 
-\begin{frame}[label=gitodo,fragile]
+\begin{frame}[label=gitodo]
   \frametitle{gitodo -- ToDo List Manager with Git}
   \framesubtitle{}
   \begin{itemize}
     \item simple commandline-based ToDo list management
     \item ToDos are managed in a single Git repository
+    \item items are stored in spearate text files {\scriptsize\color{fzjgray50}(in YAML format)}
+    \item supports prioritization, deadlines and \textit{highcal} export
     \item single portable Ruby script {\scriptsize\color{fzjgray50}(was a Shell script some time ago)}
   \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{gitodo -- ToDo List Manager with Git}
   \begin{block}{Example}
     \vspace{-0.75em}
-    \begin{lstlisting}[language=sh,basicstyle=\scriptsize\ttfamily,commentstyle=\normalfont\ttfamily\color{fzjgray50}]
-# gitodo
- S   Pri      Deadline         ID    Subject
----+-----+------------------+------+-----------------------------------
-   |  -3 |                  |    2 | Christmas presents
- D |   0 |            22:00 |    9 | Remove garbage from your bed
- C |   0 |            23:30 |    8 | Go to sleep -- yes, it's important
-   |   0 | 2013-12-10 23:59 |   10 | Still awake?
-   |   0 | 2013-12-24       |    7 | Remove SVN from all computers
+    \begin{lstlisting}[language=zsh]
+gitodo new  # --> $EDITOR opens for writing a new ToDo item
+cat $GITODO_DATA/i0010
+> what: Still awake?
+> dead: 2013-12-10 23:59
+> warn: 1
+>
+> Go to sleep! Now!
+gitodo
+>  S   Pri      Deadline         ID    Subject
+> ---+-----+------------------+------+-----------------------------------
+>    |  -3 |                  |    2 | Christmas presents
+>  D |   0 |            22:00 |    9 | Remove garbage from your bed
+>  C |   0 |            23:30 |    8 | Go to sleep -- yes, it's important
+>    |   0 | 2013-12-10 23:59 |   10 | Still awake?
+>    |   0 | 2013-12-24       |    7 | Remove SVN from all computers
     \end{lstlisting}
     \vspace{-0.75em}
   \end{block}
@@ -352,11 +482,11 @@ whereis other_file (3 copies)
     \bigskip
     \bigskip
     \bigskip
-    \bigskip
     {\Large Questions?}\par
-    {\scriptsize\color{fzjgray50}(now or later)}
+    {\scriptsize\color{fzjgray50}(now or later)}\par
     \bigskip
     \bigskip
+    {\tiny PGP-Key 0x{\color{red}XXX} \hspace{2em} Fingerprint {\color{red}???}}
   \end{center}
 \end{frame}
 

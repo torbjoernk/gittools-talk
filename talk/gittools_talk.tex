@@ -21,8 +21,8 @@
 \usepackage{hyperref}
 
 \lstdefinelanguage{zsh}{%
-  morekeywords=[1]{du,bup,cat,git,vcsh,mr,ls,gpg,gitodo},
-  morekeywords=[2]{annex,index,save,init,add,commit,remote,push,clone,list,update,bootstrap,new},
+  morekeywords=[1]{cd,grep,du,bup,cat,git,vcsh,mr,ls,gpg,gitodo,etckeeper},
+  morekeywords=[2]{annex,index,save,init,add,diff,fetch,commit,checkout,remote,push,clone,list,update,bootstrap,new},
   sensitive=true,
   morecomment=[l]\#,
   morecomment=[l]\>,
@@ -45,7 +45,7 @@
 \author{Torbjörn Klatt <\href{mailto:t.klatt@fz-juelich.de}{t.klatt@fz-juelich.de}>}
 \institute{JSC Internal Seminar}
 \date{\today}
-\setbeamertemplate{footer element3}{CC BY-SA 3.0}
+\setbeamertemplate{footer element3}{0x9CF9601F}
 \setbeamertemplate{slide counter}[showall]
 
 
@@ -98,8 +98,8 @@
 \makepart
 
 \begin{frame}[label=etckeeper]
-  \frametitle{etckepper}
-  \framesubtitle{Keep Your System's Configurations\footnote{\tiny Windows users: sleep or think of moving to Linux}}
+  \frametitle{etckepper -- Keep Your System's Configurations}
+  \framesubtitle{~\footnote{\tiny Windows users: sleep or think of moving to Linux}}
   \begin{itemize}
     \item creates a Git {\scriptsize\color{fzjgray50}(or Mercurial/Bazaar/Darcs)} repo for \texttt{/etc}
     \item uses additional meta-file for remembering permissions for each file\\
@@ -111,11 +111,49 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{}
-  \begin{block}{Example}
+  \frametitle{etckepper -- Keep Your System's Configurations}
+  \framesubtitle{Example 1}
+  \begin{block}{Initialization and switching setup}
     \vspace{-0.75em}
-    \begin{lstlisting}
+    \begin{lstlisting}[language=zsh]
+etckeeper init
+# after some time
+cd /etc && git log --oneline
+> 5bb2977 daily autocommit
+> cdd9c8c yast update
+> 9b76558 I added some cron jobs
+> 711446f initial commit
 
+# on April first
+git checkout april_first_joke_etc
+etckeeper init
+# day later
+git checkout master
+etckeeper init
+    \end{lstlisting}
+    \vspace{-0.75em}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{etckepper-- Keep Your System's Configurations}
+  \framesubtitle{Example 2}
+  \begin{block}{Get difference between two system's configs}
+    \vspace{-0.75em}
+    \begin{lstlisting}[language=zsh]
+git remote add my-other-host ssh://my-other-host/etc
+git fetch my-other-host
+git diff my-ohter-host/master group | head
+> diff --git a/group b/group
+> index 0242b84..b5e4384 100644
+> --- a/group
+> +++ b/group
+> @@ -5,21 +5,21 @@ sys:x:3:
+> adm:x:4:joey
+> tty:x:5:
+> disk:x:6:
+> -lp:x:7:cupsys
+> +lp:x:7:
     \end{lstlisting}
     \vspace{-0.75em}
   \end{block}
@@ -153,7 +191,7 @@ vcsh vim remote add origin git@my-server.net:vim-repo
 vcsh vim push -u origin master
 
 vcsh init zsh
-vcsh zsh add ~/.zsh ~/.zshrc
+vcsh zsh add ~/.zsh ~/.zshrc ~/.zshenv
 vcsh zsh commit -m "Initial commit of my Zsh configuration"
 vcsh zsh remote add origin git@my-server.net:zsh-repo
 vcsh zsh push -u origin master
@@ -174,7 +212,7 @@ vcsh zsh push -u origin master
     \item Problem: a bunch of \textit{vcsh} repos are not very handy
     \item iterates over list of repos and runs same command on each
     \item can handle Git, git-svn and vcsh repos equally
-    \item provides \textit{bootstrap} command to setup/clone an environment on new host
+    \item provides \texttt{bootstrap} command to setup/clone an environment on new host
     \item integrates well with \textit{vcsh} {\scriptsize\color{fzjgray50}(\textit{mr} config directory can be a \textit{vcsh} repo itself)}
     \item a single Perl script
   \end{itemize}
@@ -183,7 +221,7 @@ vcsh zsh push -u origin master
     \begin{lstlisting}[language=zsh]
 vcsh list
 > vim zsh git ssh bin
-mr update  # runs `git pull` or `git clone` for each
+mr update    # runs `git pull` or `git clone` for each
 # downloads named .mrconfig and clones all repos in there
 mr bootstrap https://my-server.net/.mrconfig
     \end{lstlisting}
@@ -225,7 +263,7 @@ mr bootstrap https://my-server.net/.mrconfig
         \item XMPP
         \item simple directories
       \end{itemize}
-    \item example collection of conference proceedings {\scriptsize\color{fzjgray50}(slides + video recordings)}\\
+    \item example collection of some conference proceedings {\scriptsize\color{fzjgray50}(slides + video recordings)}\\
       {\scriptsize \url{https://github.com/RichiH/conference_proceedings}}
   \end{itemize}
 \end{frame}
@@ -237,7 +275,7 @@ mr bootstrap https://my-server.net/.mrconfig
   \begin{itemize}
     \item annex all files
     \item actual files offline in special remotes on USB drives, tapes, etc.
-    \item having full information about name, size and location of all files in one place at hand
+    \item having full info about name, size and location of all files in one place at hand
   \end{itemize}
   
   \begin{block}{Example}
@@ -432,7 +470,7 @@ gitodo
   \frametitle{Tipps}
   \framesubtitle{I can't resist \dots}
   \begin{itemize}
-    \item portable GUI for Git {\scriptsize\color{fzjgray50}(browsing and actions)}: \textit{git-cola}\footnote{\tiny\url{https://github.com/git-cola/git-cola}}
+    \item portable GUI for Git {\scriptsize\color{fzjgray50}(browsing and actions)}: \textit{git-cola}~\footnote{\tiny\url{https://github.com/git-cola/git-cola}}
     \item Zsh
       \begin{itemize}
         \item very powerful built-in completion for most programs {\scriptsize\color{fzjgray50}(Git: incl. selecting branches/tags)}
@@ -453,7 +491,7 @@ gitodo
 \begin{frame}
   \frametitle{Project Links}
   \begin{description}
-    \item[etckeeper] \url{https://joeyh.name/code/etckeeper/}
+    \item[etckeeper] \url{https://github.com/agimenez/etckeeper}
     \item[vcsh] \url{https://github.com/RichiH/vcsh}
     \item[mr] \url{https://github.com/joeyh/myrepos}
     \item[git-annex] \url{https://git-annex.branchable.com/}
@@ -468,7 +506,7 @@ gitodo
 \begin{frame}
   \frametitle{Sources}
   \begin{itemize}
-    \item This talk is heavily inspired by Richard ``RichiH'' Hartman's talk at \textit{Linuxtag 2013}
+    \item This talk is heavily inspired by Richard ``\textit{RichiH}'' Hartman's talk at \textit{Linuxtag 2013}
       \footnote{\tiny\url{http://www.linuxtag.org/2013/de/program/mittwoch-22-mai-2013.html?eventid=147}}
     \item official and unofficial documentation of named tools
     \item (long-term) experiments with named tools
@@ -486,7 +524,7 @@ gitodo
     {\scriptsize\color{fzjgray50}(now or later)}\par
     \bigskip
     \bigskip
-    {\tiny PGP-Key 0x{\color{red}XXX} \hspace{2em} Fingerprint {\color{red}???}}
+    {\tiny PGP-Key: \texttt{0x9CF9601F} \hspace{2em} Fingerprint: \texttt{DB8D EA65 F6A7 3DE0 E7EA F607 6CE8 B4B1 9CF9 601F}}
   \end{center}
 \end{frame}
 

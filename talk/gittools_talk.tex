@@ -45,7 +45,7 @@
 \author{Torbjörn Klatt <\href{mailto:t.klatt@fz-juelich.de}{t.klatt@fz-juelich.de}>}
 \institute{JSC Internal Seminar}
 \date{\today}
-\setbeamertemplate{footer element3}{0x9CF9601F}
+\setbeamertemplate{footer element3}{PGP-Key: 0x126181D2}
 \setbeamertemplate{slide counter}[showall]
 
 
@@ -61,7 +61,6 @@
     \item[\hyperlink{mr}{mr}] \hyperlink{mr}{\textit{my / multiple repositories}}
     \item[\hyperlink{gitannex}{git-annex}] \hyperlink{gitannex}{\textit{so meta!}}
     \item[\hyperlink{bup}{bup}] \hyperlink{bup}{\textit{backup with Git}}
-    \item[\hyperlink{ikiwiki}{ikiwiki}] \hyperlink{ikiwiki}{\textit{Wiki compiler and publisher in a Git repo}}
     \item[\hyperlink{gcrypt}{gcrypt}] \hyperlink{gcrypt}{\textit{GPG-encrypted Git repositories}}
     \item[\hyperlink{gitodo}{gitodo}] \hyperlink{gitodo}{\textit{cmd-based ToDo List Manager in a Git repo}}
     \item[\hyperlink{tipps}{Tipps}] \hyperlink{tipps}{\textit{I can't resist \dots}}
@@ -352,30 +351,6 @@ du -sh /etc /home $BUP_DIR
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\part{ikiwiki}
-\makepart
-
-\begin{frame}[label=ikiwiki]
-  \frametitle{ikiwiki -- Wiki Compiler and Publisher in a Git Repo}
-  \framesubtitle{}
-  \begin{itemize}
-    \item 
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{}
-  \begin{block}{Example}
-    \vspace{-0.75em}
-    \begin{lstlisting}
-
-    \end{lstlisting}
-    \vspace{-0.75em}
-  \end{block}
-\end{frame}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \part{gcrypt}
 \makepart
 
@@ -478,12 +453,16 @@ gitodo
         \item highly customizable prompt {\scriptsize\color{fzjgray50}(left and right)}
         \item can mimic Bash, Ksh, tcsh {\scriptsize\color{fzjgray50}(never tried it myself)}
       \end{itemize}
-    \item Finally:
-      \begin{center}
-        \structure{You cannot time travel in real-life.\\
-          But you can in your digital life, selectively!}
-      \end{center}
   \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Finally \dots}
+  \huge
+  \begin{center}
+    \structure{You cannot time travel in real-life.\\
+      But you can in your digital life, selectively!}
+  \end{center}
 \end{frame}
 
 
@@ -496,7 +475,6 @@ gitodo
     \item[mr] \url{https://github.com/joeyh/myrepos}
     \item[git-annex] \url{https://git-annex.branchable.com/}
     \item[bup] \url{https://github.com/bup/bup}
-    \item[ikiwiki] \url{https://ikiwiki.info/}
     \item[gcrypt] \url{https://github.com/blake2-ppc/git-remote-gcrypt}
     \item[gitodo] \url{https://github.com/vain/gitodo}
   \end{description}
@@ -524,7 +502,27 @@ gitodo
     {\scriptsize\color{fzjgray50}(now or later)}\par
     \bigskip
     \bigskip
-    {\tiny PGP-Key: \texttt{0x9CF9601F} \hspace{2em} Fingerprint: \texttt{DB8D EA65 F6A7 3DE0 E7EA F607 6CE8 B4B1 9CF9 601F}}
+    \begin{columns}
+      \tiny
+      \begin{column}{0.1\textwidth}
+      \end{column}
+      \begin{column}{0.4\textwidth}
+        \begin{description}
+          \item[Building] Container (16.3v)
+          \item[Room] 2005
+          \item[Tel] 96452
+          \item[eMail] \href{mailto:t.klatt@fz-juelich.de}{t.klatt@fz-juelich.de}
+        \end{description}
+      \end{column}
+      \begin{column}{0.38\textwidth}
+        \begin{description}
+          \item[PGP-Key] \texttt{0x126181D2}
+          \item[Fingerprint] \texttt{48C5 67E6 26C3 787F 6E8E 3A20 492E 6DF2 1261 81D2}
+        \end{description}
+      \end{column}
+      \begin{column}{0.12\textwidth}
+      \end{column}
+    \end{columns}
   \end{center}
 \end{frame}
 

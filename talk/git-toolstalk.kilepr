@@ -52,10 +52,10 @@ order=-1
 
 [item:gittools_talk.tex]
 archive=true
-column=59
+column=35
 encoding=UTF-8
 highlight=LaTeX
-line=49
+line=508
 mode=LaTeX
 open=true
 order=0
@@ -67,7 +67,7 @@ JumpList=
 ViMarks=.,21,39,[,21,39,],21,39
 
 [view-settings,view=0,item:gittools_talk.tex]
-CursorColumn=59
-CursorLine=49
+CursorColumn=35
+CursorLine=508
 JumpList=
-ViMarks=.,49,58,[,49,56,],49,58
+ViMarks=.,510,42,[,510,35,],510,42

@@ -4,16 +4,14 @@ Git is a well-known and popular distributed source code management system with s
 It has an ever growing community of pationate users contributing innovative ways of utilization.
 
 This talk introduces a set of tools to easy every-day workflows (mainly on Unix machines).
-
-Having an account on more than one machine can be troublesome in unifying the work and development environment.
+For example, maintaining a unified work and development environment on multiple machines can be troublesome.
 Managing your Shell, vim/Emacs and other configuration files in Git repositories can save you a lot of time and typing.
-Same holds true for system administrators.
-Sometimes it is handy to diff and synchronize system configuration files between multiple remote machines.
+It can also be very useful to diff and synchronize system configuration files between multiple remote machines.
+Fully encrypted Git repositories even enable tracking of sensitive data.
 
-While managing a diverse set of mostly binary data (videos, images, music, ...) in different places it becomes hard to keep them organized soon.
-What about a space-efficient local and remote incremental backup system, which is easy to setup and to manage?
-
-Finally, in times too many entities want to read your data, fully encrypted Git repositories are a nice bonus.
+While managing a diverse set of mostly binary data (videos, images, music, etc.) in different places, it soon becomes hard to keep them safe and sound.
+How about a space-efficient local and remote incremental backup system, which is easy to setup and manage?
 
 Tools covered in this talk: etckepper, vcsh, mr, git-annex, bup, git-remote-gcrypt.
+
 A basic knowledge of Git is recommended but not required for this talk.

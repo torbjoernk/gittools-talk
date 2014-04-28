@@ -1,5 +1,9 @@
 \documentclass[english,hyperref={pdfpagelabels=false},aspectratio=169]{beamer}
 
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
 \mode<handout>{
   \usepackage{pgf}
   \usepackage{pgfpages}
@@ -13,15 +17,12 @@
 \usepackage[scaled]{helvet}
 \usepackage{graphics}
 
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-
 \usepackage{listings}
 
 \usepackage{hyperref}
 
 \lstdefinelanguage{zsh}{%
-  morekeywords=[1]{cd,grep,du,bup,cat,git,vcsh,mr,ls,gpg,gitodo,etckeeper},
+  morekeywords=[1]{cd,grep,du,bup,head,cat,git,vcsh,mr,ls,gpg,gitodo,etckeeper},
   morekeywords=[2]{annex,index,save,init,add,diff,fetch,commit,checkout,remote,push,clone,list,update,bootstrap,new},
   sensitive=true,
   morecomment=[l]\#,
@@ -102,17 +103,18 @@
   \begin{itemize}
     \item creates a Git {\scriptsize\color{fzjgray50}(or Mercurial/Bazaar/Darcs)} repo for \texttt{/etc}
     \item uses additional meta-file for remembering permissions for each file\\
-      {\scriptsize DVCS usually don't track file owner info; only executable bit}
-    \item ueses \textit{pre-commit} hooks to fix file permissions
-    \item hooks itself into package managers {\scriptsize\color{fzjgray50}(e.g. \textit{apt}, \textit{zypper})} to auto-commit \texttt{/etc} before and after package changes
+      {\scriptsize DVCSs usually don't track file owner info; only executable bit}
+    \item uses \textit{pre-commit} hooks to fix file permissions
+    \item hooks itself into package managers {\scriptsize\color{fzjgray50}(e.g. \textit{apt}, \textit{zypper})} to auto-commit \texttt{/etc} \\
+      before and after package changes
     \item manual commits also possible
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{etckepper -- Keep Your System's Configurations}
-  \framesubtitle{Example 1}
-  \begin{block}{Initialization and switching setup}
+  \framesubtitle{\alt<1>{Example 1}{Examples 1 \& 2}}
+  \begin{block}{Initialization}<1->
     \vspace{-0.75em}
     \begin{lstlisting}[language=zsh]
 etckeeper init
@@ -122,7 +124,12 @@ cd /etc && git log --oneline
 > cdd9c8c yast update
 > 9b76558 I added some cron jobs
 > 711446f initial commit
-
+    \end{lstlisting}
+    \vspace{-0.75em}
+  \end{block}
+  \begin{block}{Switching setup}<2>
+    \vspace{-0.75em}
+    \begin{lstlisting}[language=zsh]
 # on April first
 git checkout april_first_joke_etc
 etckeeper init
@@ -135,14 +142,14 @@ etckeeper init
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{etckepper-- Keep Your System's Configurations}
-  \framesubtitle{Example 2}
+  \frametitle{etckepper -- Keep Your System's Configurations}
+  \framesubtitle{Example 3}
   \begin{block}{Get difference between two system's configs}
     \vspace{-0.75em}
     \begin{lstlisting}[language=zsh]
 git remote add my-other-host ssh://my-other-host/etc
 git fetch my-other-host
-git diff my-ohter-host/master group | head
+git diff my-other-host/master group | head
 > diff --git a/group b/group
 > index 0242b84..b5e4384 100644
 > --- a/group
@@ -179,8 +186,8 @@ git diff my-ohter-host/master group | head
 
 \begin{frame}[fragile]
   \frametitle{vcsh -- Version Control System for (your) \$HOME}
-  \framesubtitle{Example}
-  \begin{block}{One repository for your Vim config, another for Zsh}
+  \framesubtitle{Examples}
+  \begin{block}{One repository for your Vim config \dots}<1->
     \vspace{-0.75em}
     \begin{lstlisting}[language=zsh]
 vcsh init vim
@@ -188,7 +195,12 @@ vcsh vim add ~/.vimrc ~/.vim
 vcsh vim commit -m "Initial commit of my Vim configuration"
 vcsh vim remote add origin git@my-server.net:vim-repo
 vcsh vim push -u origin master
-
+    \end{lstlisting}
+    \vspace{-0.75em}
+  \end{block}
+  \begin{block}{\dots another for Zsh}<2>
+    \vspace{-0.75em}
+    \begin{lstlisting}[language=zsh]
 vcsh init zsh
 vcsh zsh add ~/.zsh ~/.zshrc ~/.zshenv
 vcsh zsh commit -m "Initial commit of my Zsh configuration"
@@ -210,12 +222,12 @@ vcsh zsh push -u origin master
   \begin{itemize}
     \item Problem: a bunch of \textit{vcsh} repos are not very handy
     \item iterates over list of repos and runs same command on each
-    \item can handle Git, git-svn and vcsh repos equally
+    \item can handle \emph{Git}, \emph{git-svn} and \emph{vcsh} repos equally
     \item provides \texttt{bootstrap} command to setup/clone an environment on new host
     \item integrates well with \textit{vcsh} {\scriptsize\color{fzjgray50}(\textit{mr} config directory can be a \textit{vcsh} repo itself)}
     \item a single Perl script
   \end{itemize}
-  \begin{block}{Example}
+  \begin{block}{Example 1: Cloning and Bootstrapping}
     \vspace{-0.75em}
     \begin{lstlisting}[language=zsh]
 vcsh list
@@ -223,6 +235,32 @@ vcsh list
 mr update    # runs `git pull` or `git clone` for each
 # downloads named .mrconfig and clones all repos in there
 mr bootstrap https://my-server.net/.mrconfig
+    \end{lstlisting}
+    \vspace{-0.75em}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{mr -- my / multiple repositories}
+  \framesubtitle{Examples}
+  \begin{block}{Status, Commit \& Push}
+    \vspace{-0.75em}
+    \begin{lstlisting}[language=zsh]
+mr status
+> mr status: /home/t.klatt/.config/vcsh/repo.d/git.git
+> mr status: /home/t.klatt/.config/vcsh/repo.d/mr.git
+> mr status: /home/t.klatt/.config/vcsh/repo.d/ssh.git
+> mr status: /home/t.klatt/.config/vcsh/repo.d/vim.git
+>  M .vim/bundles.vim
+> mr status: /home/t.klatt/.config/vcsh/repo.d/zsh.git
+>  M .zshrc
+> mr status: finished (5 ok)
+
+mr commit
+# `git commit -a` is called on every dirty repo
+
+mr push
+# `git push` is called on every repo
     \end{lstlisting}
     \vspace{-0.75em}
   \end{block}
@@ -237,13 +275,13 @@ mr bootstrap https://my-server.net/.mrconfig
   \frametitle{git-annex -- Version Files Without Their Contents}
   \framesubtitle{So meta!~\footnote{\tiny Windows users: Wake up!}}
   \begin{itemize}
-    \item saves meta info {\scriptsize\color{fzjgray50}(i.e. name, size)} of files without their contents
+    \item saves meta info {\scriptsize\color{fzjgray50}(i.e. name, size, SHA-1)} of files without their contents
     \item saves actual files read-only in \texttt{.git/annex/objects}\\
       {\scriptsize symlinks them to original/real location}
     \item keeps track of which remote has which files\\
       {\scriptsize each remote identified by UUID}
     \item designed for flaky connections\\
-      {\scriptsize uses rsync for data transfer}
+      {\scriptsize uses \emph{rsync} for data transfer}
   \end{itemize}
 \end{frame}
 
@@ -251,7 +289,8 @@ mr bootstrap https://my-server.net/.mrconfig
   \frametitle{git-annex -- Version Files Without Their Contents}
   \framesubtitle{I mean, so really meta!}
   \begin{itemize}
-    \item written in Haskell
+    \item written in Haskell\\
+      {\scriptsize available for Linux, OSX, Android (beta), Windows (alpha)}
     \item allows for special remotes
       \begin{itemize}
         \item Amazon S3 / Glacier
@@ -270,7 +309,7 @@ mr bootstrap https://my-server.net/.mrconfig
 
 \begin{frame}[fragile]
   \frametitle{git-annex -- Version Files Without Their Contents}
-  \framesubtitle{Example Szenario: The Archivist}
+  \framesubtitle{Example Szenario: The Archivist \footnote{\tiny taken from official website}}
   \begin{itemize}
     \item annex all files
     \item actual files offline in special remotes on USB drives, tapes, etc.
@@ -285,8 +324,8 @@ git annex whereis
 >     7570b02e-15e9-11e0-adf0-9f3f94cb2eaa  -- backup drive
 > whereis other_file (3 copies)
 >     0c443de8-e644-11df-acbf-f7cd7ca6210d  -- here (laptop)
-> 62b39bbe-4149-11e0-af01-bb89245a1e61  -- usb drive
-> 7570b02e-15e9-11e0-adf0-9f3f94cb2eaa  -- backup drive
+>     62b39bbe-4149-11e0-af01-bb89245a1e61  -- usb drive
+>     7570b02e-15e9-11e0-adf0-9f3f94cb2eaa  -- backup drive
     \end{lstlisting}
     \vspace{-0.75em}
   \end{block}
@@ -294,7 +333,7 @@ git annex whereis
 
 \begin{frame}
   \frametitle{git-annex -- Version Files Without Their Contents}
-  \framesubtitle{Example Szenario: The Nomad}
+  \framesubtitle{Example Szenario: The Nomad \footnote{\tiny taken from official website}}
   \begin{itemize}
     \item keep copies of data online (on internet)
     \item sync several local devices for occasional backup
@@ -327,7 +366,8 @@ git annex whereis
 
 \begin{frame}[fragile]
   \frametitle{bup -- Git for \textsc{Large} Files}
-  \begin{block}{Example}
+  \framesubtitle{Examples}
+  \begin{block}{Initialization}
     \vspace{-0.75em}
     \begin{lstlisting}[language=zsh]
 bup init
@@ -336,16 +376,53 @@ bup index /home/t.klatt                                 # took a few seconds
 bup save --name zamws-home-tklatt /home/t.klatt         # took about 3min
 > Reading index: 203502, done.
 > Saving: 100.00% (14743111/14743111k, 203502/203502 files), done.
-# after some time (and cron jobs)
+    \end{lstlisting}
+    \vspace{-0.75em}
+  \end{block}
+  \begin{block}{Browsing}
+    \vspace{-0.75em}
+    \begin{lstlisting}[language=zsh]
+# after some time (and daily cron job for backup)
 bup ls zamws-home-tklatt | grep -ce '^2014-.*'
 > 71
 du -sh /home/t.klatt $BUP_DIR
 > 18G    /home
 > 24G    /backup/homebck
+bup web  # opens web browser
     \end{lstlisting}
     \vspace{-0.75em}
   \end{block}
 \end{frame}
+
+{
+\setbeamertemplate{background}{\includegraphics[width=\paperwidth]{black.png}}
+\begin{frame}
+  \centering
+  \color{white}
+  {\Huge \textsc{The Crash}}
+  \vfill
+  {\tiny\emph{or stupid action} {\color{fzjgray50}(\texttt{cd \textasciitilde~\&\& rm -rf *})} \emph{while drunk}}
+  \vfill
+  \color{green}
+  \texttt{[t.klatt@zam]>\textunderscore}
+\end{frame}
+}
+
+\begin{frame}[fragile]
+  \frametitle{bup -- Git for \textsc{Large} Files}
+  \framesubtitle{Example}
+  \begin{block}{Backup Recovering}
+    \vspace{-0.75em}
+    \begin{lstlisting}[language=zsh]
+cd /home/t.klatt
+export BUP_DIR=/backup/homebck
+bup restore -C . zamws-home-tklatt/latest/home/t.klatt/
+> Restoring ...  # takes some time; much longer than `bup init & bup save`
+    \end{lstlisting}
+    \vspace{-0.75em}
+  \end{block}
+\end{frame}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -357,27 +434,31 @@ du -sh /home/t.klatt $BUP_DIR
   \framesubtitle{}
   \begin{itemize}
     \item implements a git-remote-handler to deal with \texttt{gcrypt::} remotes\\
-      {\scriptsize transport via rsync, sftp or git}
+      {\scriptsize transport via \emph{rsync}, \emph{sftp} or \emph{git}}
     \item remote repository is GPG-encrypted for one or multiple participants
     \item each pack is encrypted with a symetric key stored in a asymetric encrypted manifest file
     \item can be a special remote for \textit{git-annex}
     \item Hint: use it as a remote for your \textit{etckeeper}'s repo
-    \item Remark: You might want to use Joey ``joeyh'' Hess' fork of gcrypt
-      \footnote{\tiny\url{https://github.com/joeyh/git-remote-gcrypt}}
+    \item \scriptsize\color{fzjgray50}Remark: You might want to use Joey ``joeyh'' Hess' fork of \emph{gcrypt}
+      \footnote{\tiny\url{https://github.com/joeyh/git-remote-gcrypt} because it has some bugfixes not yet merged upstream}
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{gcrypt -- GPG-encrypted Git remotes}
-  \framesubtitle{}
-  \begin{block}{Example}
+  \framesubtitle{Example}
+  \begin{block}{Initialization and Committing}
     \vspace{-0.75em}
     \begin{lstlisting}[language=zsh]
-git init
-git add my_secret_file
-git commit -m "secret file"
+git init & git add my_secret_file & git commit -m "secret file"
 git remote add secret-server gcrypt::git@my-server.net:secret-repo
 git push secret-server master
+    \end{lstlisting}
+    \vspace{-0.75em}
+  \end{block}
+  \begin{block}{Cloning as Participant}
+    \vspace{-0.75em}
+    \begin{lstlisting}[language=zsh]
 git clone git@my-server.net:secret-repo
 ls -lA secret-repo
 > -rw------- 1 t.klatt users  303 Jan 15 09:24 0153f2b0...ea5f861d
@@ -444,7 +525,7 @@ gpg -d 91bd0c09...4881aa0a
   \framesubtitle{I can't resist \dots}
   \begin{itemize}
     \item portable GUI for Git {\scriptsize\color{fzjgray50}(browsing and actions)}: \textit{git-cola}~\footnote{\tiny\url{https://github.com/git-cola/git-cola}}
-    \item Zsh
+    \item \emph{Zsh} as the main Shell on Unix and OSX
       \begin{itemize}
         \item very powerful built-in completion for most programs {\scriptsize\color{fzjgray50}(Git: incl. selecting branches/tags)}
         \item prompt-integrated info about current VCS working copy
@@ -459,7 +540,8 @@ gpg -d 91bd0c09...4881aa0a
   \huge
   \begin{center}
     \structure{You cannot time travel in real-life.\\
-      But you can in your digital life, selectively!}
+      But you can in your digital life.\\
+      Selectively. Everywhere.}
   \end{center}
 \end{frame}
 

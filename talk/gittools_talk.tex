@@ -64,7 +64,7 @@
     \item[\hyperlink{bup}{bup}] \hyperlink{bup}{\textit{backup with Git}}
     \item[\hyperlink{gcrypt}{gcrypt}] \hyperlink{gcrypt}{\textit{GPG-encrypted Git repositories}}
 %     \item[\hyperlink{gitodo}{gitodo}] \hyperlink{gitodo}{\textit{cmd-based ToDo List Manager in a Git repo}}
-    \item[\hyperlink{tipps}{Tipps}] \hyperlink{tipps}{\textit{I can't resist \dots}}
+%     \item[\hyperlink{tipps}{Tipps}] \hyperlink{tipps}{\textit{I can't resist \dots}}
   \end{description}
 \end{frame}
 
@@ -79,11 +79,8 @@
   \begin{itemize}
     \item decentralized / distributed\\
       {\scriptsize alike Mercurial/hg or Bazar in contrast to CVS or Subversion}
-%     \item designed by Linus ``\textit{the-one-and-only}'' Torwalds\\
-%       {\scriptsize\textit{Git} is British-English slang for ``\textit{unpleasant person}''}
     \item works on deltas {\scriptsize\color{fzjgray50}(diffs, patches)} instead of whole files
-    \item non-linear history\\
-      {\scriptsize \textit{branching} and \textit{merging} is easy and performant}
+    \item non-linear history
     \item cryptological verification of revisions\\
       {\scriptsize each revision (\textit{commit}) has a unique SHA-1 hash computed from diff + meta info}
     \item no need for a server / everything is locally available\\
@@ -104,7 +101,7 @@
     \item creates a Git {\scriptsize\color{fzjgray50}(or Mercurial/Bazaar/Darcs)} repo for \texttt{/etc}
     \item uses additional meta-file for remembering permissions for each file\\
       {\scriptsize DVCSs usually don't track file owner info; only executable bit}
-    \item uses \textit{pre-commit} hooks to fix file permissions
+    \item uses \textit{pre-} and \textit{post-commit} hooks to fix file permissions
     \item hooks itself into package managers {\scriptsize\color{fzjgray50}(e.g. \textit{apt}, \textit{zypper})} to auto-commit \texttt{/etc} \\
       before and after package changes
     \item manual commits also possible
@@ -331,18 +328,18 @@ git annex whereis
   \end{block}
 \end{frame}
 
-\begin{frame}
-  \frametitle{git-annex -- Version Files Without Their Contents}
-  \framesubtitle{Example Szenario: The Nomad \footnote{\tiny taken from official website}}
-  \begin{itemize}
-    \item keep copies of data online (on internet)
-    \item sync several local devices for occasional backup
-    \item add data locally while on the road
-    \item sync data to online remotes while at Internet café or friend's place
-    \item drop local copies, still have them online and knowing exactly where
-    \item perfect for photos while traveling
-  \end{itemize}
-\end{frame}
+% \begin{frame}
+%   \frametitle{git-annex -- Version Files Without Their Contents}
+%   \framesubtitle{Example Szenario: The Nomad \footnote{\tiny taken from official website}}
+%   \begin{itemize}
+%     \item keep copies of data online (on internet)
+%     \item sync several local devices for occasional backup
+%     \item add data locally while on the road
+%     \item sync data to online remotes while at Internet café or friend's place
+%     \item drop local copies, still have them online and knowing exactly where
+%     \item perfect for photos while traveling
+%   \end{itemize}
+% \end{frame}
 
 
 
@@ -367,7 +364,7 @@ git annex whereis
 \begin{frame}[fragile]
   \frametitle{bup -- Git for \textsc{Large} Files}
   \framesubtitle{Examples}
-  \begin{block}{Initialization}
+  \begin{block}{Initialization}<1->
     \vspace{-0.75em}
     \begin{lstlisting}[language=zsh]
 bup init
@@ -379,7 +376,7 @@ bup save --name zamws-home-tklatt /home/t.klatt         # took about 3min
     \end{lstlisting}
     \vspace{-0.75em}
   \end{block}
-  \begin{block}{Browsing}
+  \begin{block}{Browsing}<2>
     \vspace{-0.75em}
     \begin{lstlisting}[language=zsh]
 # after some time (and daily cron job for backup)
@@ -388,7 +385,6 @@ bup ls zamws-home-tklatt | grep -ce '^2014-.*'
 du -sh /home/t.klatt $BUP_DIR
 > 18G    /home
 > 24G    /backup/homebck
-bup web  # opens web browser
     \end{lstlisting}
     \vspace{-0.75em}
   \end{block}
@@ -415,7 +411,6 @@ bup web  # opens web browser
     \vspace{-0.75em}
     \begin{lstlisting}[language=zsh]
 cd /home/t.klatt
-export BUP_DIR=/backup/homebck
 bup restore -C . zamws-home-tklatt/latest/home/t.klatt/
 > Restoring ...  # takes some time; much longer than `bup init & bup save`
     \end{lstlisting}
@@ -450,13 +445,13 @@ bup restore -C . zamws-home-tklatt/latest/home/t.klatt/
   \begin{block}{Initialization and Committing}
     \vspace{-0.75em}
     \begin{lstlisting}[language=zsh]
-git init & git add my_secret_file & git commit -m "secret file"
+git add my_secret_file & git commit -m "secret file"
 git remote add secret-server gcrypt::git@my-server.net:secret-repo
 git push secret-server master
     \end{lstlisting}
     \vspace{-0.75em}
   \end{block}
-  \begin{block}{Cloning as Participant}
+  \begin{block}{Cloning as Another Person}
     \vspace{-0.75em}
     \begin{lstlisting}[language=zsh]
 git clone git@my-server.net:secret-repo
@@ -517,33 +512,33 @@ gpg -d 91bd0c09...4881aa0a
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\part{Tipps}
-\makepart
-
-\begin{frame}[label=tipps]
-  \frametitle{Tipps}
-  \framesubtitle{I can't resist \dots}
-  \begin{itemize}
-    \item portable GUI for Git {\scriptsize\color{fzjgray50}(browsing and actions)}: \textit{git-cola}~\footnote{\tiny\url{https://github.com/git-cola/git-cola}}
-    \item \emph{Zsh} as the main Shell on Unix and OSX
-      \begin{itemize}
-        \item very powerful built-in completion for most programs {\scriptsize\color{fzjgray50}(Git: incl. selecting branches/tags)}
-        \item prompt-integrated info about current VCS working copy
-        \item highly customizable prompt {\scriptsize\color{fzjgray50}(left and right)}
-        \item can mimic Bash, Ksh, tcsh {\scriptsize\color{fzjgray50}(never tried it myself)}
-      \end{itemize}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Finally \dots}
-  \huge
-  \begin{center}
-    \structure{You cannot time travel in real-life.\\
-      But you can in your digital life.\\
-      Selectively. Everywhere.}
-  \end{center}
-\end{frame}
+% \part{Tipps}
+% \makepart
+% 
+% \begin{frame}[label=tipps]
+%   \frametitle{Tipps}
+%   \framesubtitle{I can't resist \dots}
+%   \begin{itemize}
+%     \item portable GUI for Git {\scriptsize\color{fzjgray50}(browsing and actions)}: \textit{git-cola}~\footnote{\tiny\url{https://github.com/git-cola/git-cola}}
+%     \item \emph{Zsh} as the main Shell on Unix and OSX
+%       \begin{itemize}
+%         \item very powerful built-in completion for most programs {\scriptsize\color{fzjgray50}(Git: incl. selecting branches/tags)}
+%         \item prompt-integrated info about current VCS working copy
+%         \item highly customizable prompt {\scriptsize\color{fzjgray50}(left and right)}
+%         \item can mimic Bash, Ksh, tcsh {\scriptsize\color{fzjgray50}(never tried it myself)}
+%       \end{itemize}
+%   \end{itemize}
+% \end{frame}
+% 
+% \begin{frame}
+%   \frametitle{Finally \dots}
+%   \huge
+%   \begin{center}
+%     \structure{You cannot time travel in real-life.\\
+%       But you can in your digital life.\\
+%       Selectively. Everywhere.}
+%   \end{center}
+% \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -574,7 +569,7 @@ gpg -d 91bd0c09...4881aa0a
 \begin{frame}
   \frametitle{~}
   \begin{center}
-    {\huge Thank you for your interest!}\par
+    {\huge Thank you for your interest and time!}\par
     \bigskip
     \bigskip
     \bigskip

@@ -4,8 +4,8 @@ bibliographyBackendUserOverride=
 def_graphic_ext=pdf
 img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
-kile_livePreviewEnabled=true
-kile_livePreviewStatusUserSpecified=false
+kile_livePreviewEnabled=false
+kile_livePreviewStatusUserSpecified=true
 kile_livePreviewTool=LivePreview-PDFLaTeX
 kileprversion=2
 kileversion=2.9.60
@@ -57,10 +57,10 @@ order=-1
 
 [item:gittools_talk.tex]
 archive=true
-column=7
+column=20
 encoding=UTF-8
 highlight=LaTeX
-line=458
+line=454
 mode=LaTeX
 open=true
 order=0
@@ -72,7 +72,7 @@ JumpList=
 ViMarks=.,21,39,[,21,39,],21,39
 
 [view-settings,view=0,item:gittools_talk.tex]
-CursorColumn=7
-CursorLine=458
+CursorColumn=20
+CursorLine=454
 JumpList=
-ViMarks=.,510,42,[,510,35,],510,42
+ViMarks=.,453,40,[,453,35,],453,40

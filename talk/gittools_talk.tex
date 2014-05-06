@@ -1,4 +1,4 @@
-\documentclass[english,hyperref={pdfpagelabels=false},aspectratio=169]{beamer}
+\documentclass[english,hyperref={pdfpagelabels=false},aspectratio=1610]{beamer}
 
 \usepackage{lmodern}
 \usepackage[utf8]{inputenc}
@@ -45,7 +45,7 @@
 \subtitle{Git-ify Your (digital) Life}
 \author{Torbjörn Klatt <\href{mailto:t.klatt@fz-juelich.de}{t.klatt@fz-juelich.de}>}
 \institute{JSC Internal Seminar}
-\date{May, 7th 2014}
+\date{May 7, 2014}
 \setbeamertemplate{footer element3}{PGP-Key: 0x64216AF3}
 \setbeamertemplate{slide counter}[showall]
 
@@ -63,9 +63,13 @@
     \item[\hyperlink{gitannex}{git-annex}] \hyperlink{gitannex}{\textit{so meta!}}
     \item[\hyperlink{bup}{bup}] \hyperlink{bup}{\textit{backup with Git}}
     \item[\hyperlink{gcrypt}{gcrypt}] \hyperlink{gcrypt}{\textit{GPG-encrypted Git repositories}}
-%     \item[\hyperlink{gitodo}{gitodo}] \hyperlink{gitodo}{\textit{cmd-based ToDo List Manager in a Git repo}}
-%     \item[\hyperlink{tipps}{Tipps}] \hyperlink{tipps}{\textit{I can't resist \dots}}
   \end{description}
+  \vfill
+  \bigskip
+  \vfill
+  \scriptsize
+  This talk is heavily inspired by Richard ``\textit{RichiH}'' Hartman's talk at \textit{Linuxtag 2013}
+  \footnote{\tiny\url{http://www.linuxtag.org/2013/de/program/mittwoch-22-mai-2013.html?eventid=147}}, the official and unofficial documentation of named tools and (long-term) experiments with named tools.
 \end{frame}
 
 
@@ -75,7 +79,7 @@
 
 \begin{frame}[label=git]
   \frametitle{Version Control System \textit{Git}}
-  \framesubtitle{A short overview}
+  \framesubtitle{main features used by following tools}
   \begin{itemize}
     \item decentralized / distributed\\
       {\scriptsize alike Mercurial/hg or Bazar in contrast to CVS or Subversion}
@@ -95,8 +99,8 @@
 \makepart
 
 \begin{frame}[label=etckeeper]
-  \frametitle{etckepper -- Keep Your System's Configurations}
-  \framesubtitle{~\footnote{\tiny Windows users: sleep or think of moving to Linux}}
+  \frametitle{etckeeper -- Keep Your System's Configurations}
+  \framesubtitle{Easy Backups for Your \texttt{/etc}~\footnote{\tiny by Joey Hess and others}}
   \begin{itemize}
     \item creates a Git {\scriptsize\color{fzjgray50}(or Mercurial/Bazaar/Darcs)} repo for \texttt{/etc}
     \item uses additional meta-file for remembering permissions for each file\\
@@ -109,7 +113,7 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{etckepper -- Keep Your System's Configurations}
+  \frametitle{etckeeper -- Keep Your System's Configurations}
   \framesubtitle{\alt<1>{Example 1}{Examples 1 \& 2}}
   \begin{block}{Initialization}<1->
     \vspace{-0.75em}
@@ -139,7 +143,7 @@ etckeeper init
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{etckepper -- Keep Your System's Configurations}
+  \frametitle{etckeeper -- Keep Your System's Configurations}
   \framesubtitle{Example 3}
   \begin{block}{Get difference between two system's configs}
     \vspace{-0.75em}
@@ -169,7 +173,7 @@ git diff my-other-host/master group | head
 
 \begin{frame}[label=vcsh]
   \frametitle{vcsh -- Version Control System for (your) \$HOME}
-  \framesubtitle{version \texttt{.profile}, \texttt{.\{bash,zsh,vim\}rc}, \dots~--- without pollution}
+  \framesubtitle{version \texttt{.profile}, \texttt{.\{bash,zsh,vim\}rc}, \dots~--- without pollution~\footnote{\tiny by Richard Hartmann and others}}
   \begin{itemize}
     \item separate Git repositories for dotfiles\\
       {\scriptsize without polluting \$HOME with \texttt{.git} directories}
@@ -215,7 +219,7 @@ vcsh zsh push -u origin master
 
 \begin{frame}[label=mr,fragile]
   \frametitle{mr -- my / multiple repositories}
-  \framesubtitle{One command to rule them all}
+  \framesubtitle{One command to rule them all~\footnote{\tiny by Joey Hess and others}}
   \begin{itemize}
     \item Problem: a bunch of \textit{vcsh} repos are not very handy
     \item iterates over list of repos and runs same command on each
@@ -270,7 +274,7 @@ mr push
 
 \begin{frame}[label=gitannex]
   \frametitle{git-annex -- Version Files Without Their Contents}
-  \framesubtitle{So meta!~\footnote{\tiny Windows users: Wake up!}}
+  \framesubtitle{So meta!~\footnote{\tiny by Joey Hess and others}}
   \begin{itemize}
     \item saves meta info {\scriptsize\color{fzjgray50}(i.e. name, size, SHA-1)} of files without their contents
     \item saves actual files read-only in \texttt{.git/annex/objects}\\
@@ -328,19 +332,6 @@ git annex whereis
   \end{block}
 \end{frame}
 
-% \begin{frame}
-%   \frametitle{git-annex -- Version Files Without Their Contents}
-%   \framesubtitle{Example Szenario: The Nomad \footnote{\tiny taken from official website}}
-%   \begin{itemize}
-%     \item keep copies of data online (on internet)
-%     \item sync several local devices for occasional backup
-%     \item add data locally while on the road
-%     \item sync data to online remotes while at Internet café or friend's place
-%     \item drop local copies, still have them online and knowing exactly where
-%     \item perfect for photos while traveling
-%   \end{itemize}
-% \end{frame}
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -349,6 +340,7 @@ git annex whereis
 
 \begin{frame}[label=bup]
   \frametitle{bup -- Git for \textsc{Large} Files}
+  \framesubtitle{\dots and binary data!~\footnote{\tiny by over 40 people}}
   \begin{itemize}
     \item recap: Git is designed for plaintext files\\
       {\scriptsize binary files are just a huge blob for Git; no diff possible}
@@ -391,13 +383,13 @@ du -sh /home/t.klatt $BUP_DIR
 \end{frame}
 
 {
-\setbeamertemplate{background}{\includegraphics[width=\paperwidth]{black.png}}
-\begin{frame}
+\setbeamertemplate{background canvas}{\includegraphics[width=\paperwidth]{black.png}}
+\begin{frame}[plain]
   \centering
   \color{white}
   {\Huge \textsc{The Crash}}
   \vfill
-  {\tiny\emph{or stupid action} {\color{fzjgray50}(\texttt{cd \textasciitilde~\&\& rm -rf *})} \emph{while drunk}}
+  {\scriptsize \emph{or stupid action} {\color{fzjgray50}(\texttt{cd \textasciitilde~\&\& rm -rf *})} \emph{while being sleep-deprived}}
   \vfill
   \color{green}
   \texttt{[t.klatt@zam]>\textunderscore}
@@ -431,7 +423,7 @@ bup restore -C . zamws-home-tklatt/latest/home/t.klatt/
     \item implements a git-remote-handler to deal with \texttt{gcrypt::} remotes\\
       {\scriptsize transport via \emph{rsync}, \emph{sftp} or \emph{git}}
     \item remote repository is GPG-encrypted for one or multiple participants
-    \item each pack is encrypted with a symetric key stored in a asymetric encrypted manifest file
+    \item each pack is encrypted with a symmetric key stored in a asymmetric encrypted manifest file
     \item can be a special remote for \textit{git-annex}
     \item Hint: use it as a remote for your \textit{etckeeper}'s repo
     \item \scriptsize\color{fzjgray50}Remark: You might want to use Joey ``joeyh'' Hess' fork of \emph{gcrypt}
@@ -469,101 +461,19 @@ gpg -d 91bd0c09...4881aa0a
 \end{frame}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \part{gitodo}
-% \makepart
-% 
-% \begin{frame}[label=gitodo]
-%   \frametitle{gitodo -- ToDo List Manager with Git}
-%   \framesubtitle{}
-%   \begin{itemize}
-%     \item simple commandline-based ToDo list management
-%     \item ToDos are managed in a single Git repository
-%     \item items are stored in spearate text files {\scriptsize\color{fzjgray50}(in YAML format)}
-%     \item supports prioritization, deadlines and \textit{highcal} export
-%     \item single portable Ruby script {\scriptsize\color{fzjgray50}(was a Shell script some time ago)}
-%   \end{itemize}
-% \end{frame}
-% 
-% \begin{frame}[fragile]
-%   \frametitle{gitodo -- ToDo List Manager with Git}
-%   \begin{block}{Example}
-%     \vspace{-0.75em}
-%     \begin{lstlisting}[language=zsh]
-% gitodo new  # --> $EDITOR opens for writing a new ToDo item
-% cat $GITODO_DATA/i0010
-% > what: Still awake?
-% > dead: 2013-12-10 23:59
-% > warn: 1
-% >
-% > Go to sleep! Now!
-% gitodo
-% >  S   Pri      Deadline         ID    Subject
-% > ---+-----+------------------+------+-----------------------------------
-% >    |  -3 |                  |    2 | Christmas presents
-% >  D |   0 |            22:00 |    9 | Remove garbage from your bed
-% >  C |   0 |            23:30 |    8 | Go to sleep -- yes, it's important
-% >    |   0 | 2013-12-10 23:59 |   10 | Still awake?
-% >    |   0 | 2013-12-24       |    7 | Remove SVN from all computers
-%     \end{lstlisting}
-%     \vspace{-0.75em}
-%   \end{block}
-% \end{frame}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \part{Tipps}
-% \makepart
-% 
-% \begin{frame}[label=tipps]
-%   \frametitle{Tipps}
-%   \framesubtitle{I can't resist \dots}
-%   \begin{itemize}
-%     \item portable GUI for Git {\scriptsize\color{fzjgray50}(browsing and actions)}: \textit{git-cola}~\footnote{\tiny\url{https://github.com/git-cola/git-cola}}
-%     \item \emph{Zsh} as the main Shell on Unix and OSX
-%       \begin{itemize}
-%         \item very powerful built-in completion for most programs {\scriptsize\color{fzjgray50}(Git: incl. selecting branches/tags)}
-%         \item prompt-integrated info about current VCS working copy
-%         \item highly customizable prompt {\scriptsize\color{fzjgray50}(left and right)}
-%         \item can mimic Bash, Ksh, tcsh {\scriptsize\color{fzjgray50}(never tried it myself)}
-%       \end{itemize}
-%   \end{itemize}
-% \end{frame}
-% 
-% \begin{frame}
-%   \frametitle{Finally \dots}
-%   \huge
-%   \begin{center}
-%     \structure{You cannot time travel in real-life.\\
-%       But you can in your digital life.\\
-%       Selectively. Everywhere.}
-%   \end{center}
-% \end{frame}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
   \frametitle{Project Links}
   \begin{description}
-    \item[etckeeper] \url{https://github.com/agimenez/etckeeper}
+    \item[etckeeper] \url{https://github.com/joeyh/etckeeper}
     \item[vcsh] \url{https://github.com/RichiH/vcsh}
     \item[mr] \url{https://github.com/joeyh/myrepos}
     \item[git-annex] \url{https://git-annex.branchable.com/}
     \item[bup] \url{https://github.com/bup/bup}
-    \item[gcrypt] \url{https://github.com/blake2-ppc/git-remote-gcrypt}
-%     \item[gitodo] \url{https://github.com/vain/gitodo}
+    \item[gcrypt] \url{https://github.com/blake2-ppc/git-remote-gcrypt}\\
+      {\tiny Joey Hess' fork with bug fixes: \url{https://github.com/joeyh/git-remote-gcrypt}}
   \end{description}
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{Sources}
-  \begin{itemize}
-    \item This talk is heavily inspired by Richard ``\textit{RichiH}'' Hartman's talk at \textit{Linuxtag 2013}
-      \footnote{\tiny\url{http://www.linuxtag.org/2013/de/program/mittwoch-22-mai-2013.html?eventid=147}}
-    \item official and unofficial documentation of named tools
-    \item (long-term) experiments with named tools
-  \end{itemize}
 \end{frame}
 
 \begin{frame}

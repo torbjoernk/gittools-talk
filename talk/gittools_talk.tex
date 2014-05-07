@@ -105,7 +105,7 @@
     \item creates a Git {\scriptsize\color{fzjgray50}(or Mercurial/Bazaar/Darcs)} repo for \texttt{/etc}
     \item uses additional meta-file for remembering permissions for each file\\
       {\scriptsize DVCSs usually don't track file owner info; only executable bit}
-    \item uses \textit{pre-} and \textit{post-commit} hooks to fix file permissions
+    \item uses \textit{pre-commit} and \textit{post-update} hooks to fix file permissions
     \item hooks itself into package managers {\scriptsize\color{fzjgray50}(e.g. \textit{apt}, \textit{zypper})} to auto-commit \texttt{/etc} \\
       before and after package changes
     \item manual commits also possible
@@ -301,12 +301,12 @@ mr push
         \item podcast feeds
         \item XMPP
         \item simple directories
+        \item Google Drive, OwnCloud, IMAP, Flickr, \dots you name it \dots
       \end{itemize}
     \item example collection of some conference proceedings {\scriptsize\color{fzjgray50}(slides + video recordings)}\\
       {\scriptsize \url{https://github.com/RichiH/conference_proceedings}}
   \end{itemize}
 \end{frame}
-
 
 \begin{frame}[fragile]
   \frametitle{git-annex -- Version Files Without Their Contents}
@@ -375,7 +375,7 @@ bup save --name zamws-home-tklatt /home/t.klatt         # took about 3min
 bup ls zamws-home-tklatt | grep -ce '^2014-.*'
 > 71
 du -sh /home/t.klatt $BUP_DIR
-> 18G    /home
+> 18G    /home/t.klatt
 > 24G    /backup/homebck
     \end{lstlisting}
     \vspace{-0.75em}
@@ -389,7 +389,7 @@ du -sh /home/t.klatt $BUP_DIR
   \color{white}
   {\Huge \textsc{The Crash}}
   \vfill
-  {\scriptsize \emph{or stupid action} {\color{fzjgray50}(\texttt{cd \textasciitilde~\&\& rm -rf *})} \emph{while being sleep-deprived}}
+  {\scriptsize \emph{the cat running over the keyboard or a stupid action} {\color{fzjgray50}(\texttt{cd \textasciitilde~\&\& rm -rf *})} \emph{while being sleep-deprived}}
   \vfill
   \color{green}
   \texttt{[t.klatt@zam]>\textunderscore}
@@ -404,7 +404,8 @@ du -sh /home/t.klatt $BUP_DIR
     \begin{lstlisting}[language=zsh]
 cd /home/t.klatt
 bup restore -C . zamws-home-tklatt/latest/home/t.klatt/
-> Restoring ...  # takes some time; much longer than `bup init & bup save`
+> Restoring ...  # takes some time;
+                 # a little longer than `bup init & bup save`
     \end{lstlisting}
     \vspace{-0.75em}
   \end{block}
@@ -421,7 +422,7 @@ bup restore -C . zamws-home-tklatt/latest/home/t.klatt/
   \framesubtitle{}
   \begin{itemize}
     \item implements a git-remote-handler to deal with \texttt{gcrypt::} remotes\\
-      {\scriptsize transport via \emph{rsync}, \emph{sftp} or \emph{git}}
+      {\scriptsize transport via \emph{rsync}, \emph{sftp} or \emph{git} protocols}
     \item remote repository is GPG-encrypted for one or multiple participants
     \item each pack is encrypted with a symmetric key stored in a asymmetric encrypted manifest file
     \item can be a special remote for \textit{git-annex}
